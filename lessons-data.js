@@ -17,6 +17,7 @@ window.lessonsData = {
                 icon: '👁️',
                 tagline: 'Watch thoughts like clouds',
                 description: 'Notice sensations, thoughts, and emotions without getting caught in them.',
+                why: 'Awareness is the foundation of choice. When you can observe your thoughts without getting swept away, you gain the power to respond instead of react.',
                 practiceDuration: 30,
                 
                 steps: [
@@ -277,6 +278,7 @@ window.lessonsData = {
                 icon: '📝',
                 tagline: 'Facts over stories',
                 description: 'Put words to what you observe using only facts, not interpretations.',
+                why: 'Language shapes how we experience reality. When you describe what you observe with facts instead of stories, you create space between you and your reactions.',
                 practiceDuration: 30,
                 
                 steps: [
@@ -391,6 +393,7 @@ window.lessonsData = {
                 icon: '🌿',
                 tagline: 'Be fully present',
                 description: 'Engage completely in what you\'re doing. Drop self-consciousness.',
+                why: 'Life happens when you\'re not watching yourself. Full participation brings aliveness, flow, and freedom from the self-critical inner voice.',
                 practiceDuration: 30,
                 
                 steps: [
@@ -530,6 +533,7 @@ window.lessonsData = {
                 icon: '🌀',
                 tagline: 'Calm your nervous system',
                 description: 'Use breath to regulate stress response.',
+                why: 'Your breath is the bridge between your mind and body. Deep breathing activates your parasympathetic nervous system, telling your body it\'s safe to relax.',
                 practiceDuration: 30,
                 
                 steps: [
