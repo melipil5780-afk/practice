@@ -1,5 +1,5 @@
 // ===== ALL COURSES =====
-window.lessonsData = [
+window.courses = [
     {
         id: 'mindfulness',
         title: 'Mindfulness',
@@ -89,101 +89,11 @@ window.lessonsData = [
         icon: '🌀',
         duration: '7 weeks',
         started: false
-    },
-    {
-        id: 'creativity',
-        title: 'Mindful Creativity',
-        description: 'Unlock creative flow states',
-        color: '#ec4899',
-        icon: '🎨',
-        duration: '5 weeks',
-        started: false
-    },
-    {
-        id: 'eating',
-        title: 'Mindful Eating',
-        description: 'Transform your relationship with food',
-        color: '#14b8a6',
-        icon: '🍎',
-        duration: '4 weeks',
-        started: false
-    },
-    {
-        id: 'parenting',
-        title: 'Mindful Parenting',
-        description: 'Parent with presence and patience',
-        color: '#f43f5e',
-        icon: '👨‍👩‍👧‍👦',
-        duration: '8 weeks',
-        started: false
-    },
-    {
-        id: 'leadership',
-        title: 'Mindful Leadership',
-        description: 'Lead with wisdom and compassion',
-        color: '#6366f1',
-        icon: '👑',
-        duration: '8 weeks',
-        started: false
-    },
-    {
-        id: 'grief',
-        title: 'Grief & Loss',
-        description: 'Navigate difficult emotions with grace',
-        color: '#64748b',
-        icon: '🕊️',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'pain',
-        title: 'Pain Management',
-        description: 'Work with physical discomfort',
-        color: '#a855f7',
-        icon: '🩹',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'addiction',
-        title: 'Addiction Recovery',
-        description: 'Mindful approaches to healing',
-        color: '#0d9488',
-        icon: '🔓',
-        duration: '12 weeks',
-        started: false
-    },
-    {
-        id: 'aging',
-        title: 'Aging Gracefully',
-        description: 'Mindfulness through life stages',
-        color: '#fbbf24',
-        icon: '👵',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'nature',
-        title: 'Nature Connection',
-        description: 'Deepen your bond with the natural world',
-        color: '#22c55e',
-        icon: '🌳',
-        duration: '5 weeks',
-        started: false
-    },
-    {
-        id: 'spirituality',
-        title: 'Spiritual Growth',
-        description: 'Explore deeper meaning and purpose',
-        color: '#8b5cf6',
-        icon: '✨',
-        duration: '10 weeks',
-        started: false
     }
 ];
 
 // ===== ALL SKILLS =====
-window.skillsData = [
+window.skills = [
     // Mindfulness Skills
     {
         id: 'observe',
@@ -235,26 +145,6 @@ window.skillsData = [
         color: '#d97706',
         practiceDuration: 30
     },
-    {
-        id: 'effectively',
-        courseId: 'mindfulness',
-        name: 'EFFECTIVELY',
-        tagline: 'Focus on what works',
-        description: 'Let go of being right and focus on being effective.',
-        icon: '🎭',
-        color: '#0e7490',
-        practiceDuration: 30
-    },
-    {
-        id: 'checkin',
-        courseId: 'mindfulness',
-        name: 'CHECK-IN',
-        tagline: 'Regular self-awareness',
-        description: 'Pause throughout the day to notice your state.',
-        icon: '🔄',
-        color: '#059669',
-        practiceDuration: 30
-    },
     
     // Stress Management Skills
     {
@@ -287,18 +177,50 @@ window.skillsData = [
         color: '#7c3aed',
         practiceDuration: 30
     },
+    
+    // Emotional Regulation Skills
     {
-        id: 'boundaries',
-        courseId: 'stress',
-        name: 'HEALTHY BOUNDARIES',
-        tagline: 'Protect your energy',
-        description: 'Set limits mindfully and compassionately.',
-        icon: '🛡️',
+        id: 'emotionawareness',
+        courseId: 'emotions',
+        name: 'EMOTION AWARENESS',
+        tagline: 'Name it to tame it',
+        description: 'Identify and label emotions as they arise.',
+        icon: '🎭',
+        color: '#db2777',
+        practiceDuration: 30
+    },
+    {
+        id: 'emotionsurfing',
+        courseId: 'emotions',
+        name: 'EMOTION SURFING',
+        tagline: 'Ride the wave of emotion',
+        description: 'Allow emotions to rise and fall without acting on them.',
+        icon: '🏄',
         color: '#db2777',
         practiceDuration: 30
     },
     
-    // Add more skills for other courses as needed...
+    // Relationships Skills
+    {
+        id: 'activelistening',
+        courseId: 'relationships',
+        name: 'ACTIVE LISTENING',
+        tagline: 'Listen with full presence',
+        description: 'Give your complete attention when others speak.',
+        icon: '👂',
+        color: '#7c3aed',
+        practiceDuration: 30
+    },
+    {
+        id: 'compassionatecommunication',
+        courseId: 'relationships',
+        name: 'COMPASSIONATE COMMUNICATION',
+        tagline: 'Speak from the heart',
+        description: 'Express yourself with kindness and clarity.',
+        icon: '💬',
+        color: '#7c3aed',
+        practiceDuration: 30
+    }
 ];
 
 // ===== ALL LESSON STEPS =====
@@ -308,38 +230,31 @@ window.lessonSteps = {
         steps: [
             {
                 title: 'The Thought Trap',
-                content: `Right now... can you stop your thoughts? I mean completely halt the thinking process for the next 30 seconds? Try it. I'll wait...`,
-                interactive: 'timer'
+                content: `Right now... can you stop your thoughts? I mean completely halt the thinking process for the next 30 seconds? Try it. I'll wait...`
             },
             {
                 title: 'The Challenge',
-                content: `What happened? Most likely, thoughts kept appearing. A voice might have said, 'Am I doing this right?' or 'This is silly' or 'I wonder how long 30 seconds is...'`,
-                interactive: 'checkboxes'
+                content: `What happened? Most likely, thoughts kept appearing. A voice might have said, 'Am I doing this right?' or 'This is silly' or 'I wonder how long 30 seconds is...'`
             },
             {
                 title: "The Brain's Secret",
-                content: `Here's the realization: You can't stop your thoughts by force. Thinking happens automatically, like breathing or your heart beating.`,
-                interactive: 'reflection'
+                content: `Here's the realization: You can't stop your thoughts by force. Thinking happens automatically, like breathing or your heart beating.`
             },
             {
                 title: 'Two Ways',
-                content: `But you CAN observe thoughts. See the difference? Stopping vs. observing. One is impossible struggle. The other is peaceful awareness.`,
-                interactive: 'comparison'
+                content: `But you CAN observe thoughts. See the difference? Stopping vs. observing. One is impossible struggle. The other is peaceful awareness.`
             },
             {
                 title: 'Practice Now',
-                content: `For the next minute, simply notice thoughts as they arise. Don't engage, argue, or follow them. Just label: 'Thinking...' and return to watching.`,
-                interactive: 'practice_timer'
+                content: `For the next minute, simply notice thoughts as they arise. Don't engage, argue, or follow them. Just label: 'Thinking...' and return to watching.`
             },
             {
                 title: 'Use It Today',
-                content: `Every time you notice an emotion today, say one word: "Noticing." That's all. No judgment, no analysis. Just noticing.`,
-                interactive: 'application'
+                content: `Every time you notice an emotion today, say one word: "Noticing." That's all. No judgment, no analysis. Just noticing.`
             },
             {
                 title: 'Your Practice Begins',
-                content: `You now understand: Thoughts are automatic, but you can choose how to relate to them. The practice begins now.`,
-                interactive: 'completion'
+                content: `You now understand: Thoughts are automatic, but you can choose how to relate to them. The practice begins now.`
             }
         ]
     },
@@ -358,22 +273,99 @@ window.lessonSteps = {
             {
                 title: 'Practice: The 5 Senses',
                 content: `Right now: Name 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, 1 thing you can taste.`
+            },
+            {
+                title: 'When Emotions Arise',
+                content: `Instead of "I'm angry," try: "I notice tension in my jaw, heat in my face, thoughts about fairness."`
             }
         ]
     },
     
-    // Add more skill lessons here...
+    participate: {
+        title: 'PARTICIPATE',
+        steps: [
+            {
+                title: 'Half-There Living',
+                content: `How often are you physically present but mentally elsewhere?`
+            },
+            {
+                title: 'The Art of Full Engagement',
+                content: `Participate means: all of you, here, now. No audience in your head watching you.`
+            },
+            {
+                title: 'Practice: One Activity',
+                content: `Choose one routine activity (brushing teeth, washing dishes) and do it with 100% attention.`
+            },
+            {
+                title: 'Flow State',
+                content: `When you lose track of time because you're so engaged, that's participation.`
+            }
+        ]
+    },
+    
+    breathing: {
+        title: 'DEEP BREATHING',
+        steps: [
+            {
+                title: 'The Stress Response',
+                content: `Stress triggers shallow, rapid breathing. This signals "danger" to your nervous system.`
+            },
+            {
+                title: 'The Calming Breath',
+                content: `Deep, slow breathing tells your body: "It's safe to relax."`
+            },
+            {
+                title: '4-7-8 Technique',
+                content: `Inhale for 4 counts, hold for 7, exhale for 8. This activates the parasympathetic nervous system.`
+            },
+            {
+                title: 'Daily Practice',
+                content: `Practice 5 deep breaths whenever you feel stressed.`
+            }
+        ]
+    },
+    
+    emotionawareness: {
+        title: 'EMOTION AWARENESS',
+        steps: [
+            {
+                title: 'The Emotional Landscape',
+                content: `Emotions are like weather - they come and go. You are the sky.`
+            },
+            {
+                title: 'Naming Emotions',
+                content: `Simply saying "This is anger" or "This is sadness" creates distance.`
+            },
+            {
+                title: 'Emotion vs. Reaction',
+                content: `You can feel anger without yelling. You can feel fear without running.`
+            },
+            {
+                title: 'Daily Check-ins',
+                content: `Pause 3 times daily and ask: "What am I feeling right now?"`
+            }
+        ]
+    },
+    
+    activelistening: {
+        title: 'ACTIVE LISTENING',
+        steps: [
+            {
+                title: 'Listening vs. Waiting to Speak',
+                content: `Most people aren't listening - they're preparing their response.`
+            },
+            {
+                title: 'Full Attention',
+                content: `Put away distractions. Make eye contact. Be fully present.`
+            },
+            {
+                title: 'Reflective Listening',
+                content: `Repeat back what you heard: "So what I'm hearing is..."`
+            },
+            {
+                title: 'Practice with a Friend',
+                content: `Spend 5 minutes just listening without interrupting or advising.`
+            }
+        ]
+    }
 };
-
-// ===== HELPER FUNCTIONS =====
-function getCourseSkills(courseId) {
-    return window.skillsData.filter(skill => skill.courseId === courseId);
-}
-
-function getSkillById(skillId) {
-    return window.skillsData.find(skill => skill.id === skillId);
-}
-
-function getCourseById(courseId) {
-    return window.lessonsData.find(course => course.id === courseId);
-}
