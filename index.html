@@ -12,342 +12,88 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        * { margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        html, body { 
-            width: 100%; 
-            height: 100%; 
-            overflow: hidden; 
-            background: #0f172a;
-        }
-        
-        .container { 
-            width: 100%; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-        }
-        
-        .app-wrapper { 
-            width: 100%; 
-            max-width: 28rem; 
-            height: 100%; 
-            margin: 0 auto; 
-            background: rgba(15, 23, 42, 0.98); 
-            display: flex; 
-            flex-direction: column; 
-            border-left: 1px solid rgba(30, 41, 59, 0.5); 
-            border-right: 1px solid rgba(30, 41, 59, 0.5); 
-            position: relative;
-        }
-        
-        .bg-blur-1, .bg-blur-2 { 
-            position: absolute; 
-            border-radius: 50%; 
-            filter: blur(140px);
-            pointer-events: none; 
-            z-index: 0;
-            opacity: 0.6;
-        }
-        
-        .bg-blur-1 { 
-            top: -5%; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 22rem; 
-            height: 22rem; 
-            background: rgba(14, 116, 144, 0.08);
-        }
-        
-        .bg-blur-2 { 
-            bottom: -5%; 
-            right: -5%; 
-            width: 18rem; 
-            height: 18rem; 
-            background: rgba(217, 119, 6, 0.08);
-        }
-        
-        .main-content { 
-            flex: 1; 
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch; 
-            scrollbar-width: none; 
-            position: relative;
-            z-index: 1;
-        }
-        
-        .main-content::-webkit-scrollbar { 
-            display: none; 
-        }
-        
-        .content-wrapper { 
-            padding: 1rem 1.25rem 2rem; 
-        }
-        
-        .card { 
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.65), rgba(15, 23, 42, 0.45)); 
-            border: 1px solid rgba(51, 65, 85, 0.4); 
-            border-radius: 1.25rem; 
-        }
-        
-        .skill-header { 
-            background: linear-gradient(135deg, #0e7490, #d97706);
-        }
-        
-        .btn-primary { 
-            background: linear-gradient(to right, #0e7490, #d97706); 
-            color: white; 
-            font-weight: 600; 
-            border: none; 
-            padding: 1rem; 
-            border-radius: 1rem; 
-            cursor: pointer; 
-            width: 100%; 
-            font-size: 1rem; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 16px rgba(14, 116, 144, 0.2);
-        }
-        
-        .btn-primary:hover, .btn-primary:active { 
-            opacity: 0.92; 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(14, 116, 144, 0.25);
-        }
-        
-        .progress-dots { 
-            display: flex; 
-            gap: 0.25rem; 
-        }
-        
-        .progress-dot { 
-            flex: 1; 
-            height: 0.5rem; 
-            background: rgba(148, 163, 184, 0.25); 
-            border-radius: 9999px; 
-        }
-        
-        .progress-dot.active { 
-            background: linear-gradient(to right, #0e7490, #d97706); 
-        }
-        
-        .fade-in { 
-            animation: fadeIn 0.35s ease-out; 
-        }
-        
-        .hidden { 
-            display: none !important; 
-        }
-        
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(15px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .timer-display { 
-            font-size: 4rem; 
-            font-weight: 700; 
-            background: linear-gradient(to right, #0e7490, #d97706); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            background-clip: text;
-        }
-        
-        .step-transition { 
-            animation: slideUp 0.4s ease-out; 
-        }
-        
-        .journal-textarea {
-            width: 100%;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(51, 65, 85, 0.4);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            color: white;
-            font-size: 16px;
-            min-height: 140px;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            resize: vertical;
-            font-family: inherit;
-        }
-        
-        .journal-textarea:focus {
-            outline: none;
-            border-color: rgba(14, 116, 144, 0.5);
-            background: rgba(30, 41, 59, 0.7);
-        }
-        
-        .prompt-chip {
-            display: inline-block;
-            padding: 0.75rem 1.25rem;
-            background: rgba(14, 116, 144, 0.1);
-            border: 1px solid rgba(14, 116, 144, 0.3);
-            border-radius: 9999px;
-            color: rgb(165, 243, 252);
-            font-size: 0.875rem;
-            margin: 0.25rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .prompt-chip:active {
-            background: rgba(14, 116, 144, 0.2);
-            transform: translateY(-1px);
-        }
-        
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-        
-        .calendar-day:hover {
-            background: rgba(14, 116, 144, 0.1);
-        }
-        
-        .calendar-day.completed {
-            background: rgba(34, 197, 94, 0.2);
-            border: 2px solid rgba(34, 197, 94, 0.5);
-        }
-        
-        .calendar-day.scheduled {
-            background: rgba(14, 116, 144, 0.2);
-            border: 2px solid rgba(14, 116, 144, 0.5);
-        }
-        
-        .calendar-day.today {
-            border: 2px solid rgba(217, 119, 6, 0.7);
-        }
-        
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; }
+        .container { width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        .app-wrapper { width: 100%; max-width: 28rem; height: 100%; margin: 0 auto; 
+            background: rgba(15, 23, 42, 0.98); display: flex; flex-direction: column; 
+            border-left: 1px solid rgba(30, 41, 59, 0.5); border-right: 1px solid rgba(30, 41, 59, 0.5); position: relative; }
+        .bg-blur-1, .bg-blur-2 { position: absolute; border-radius: 50%; filter: blur(140px);
+            pointer-events: none; z-index: 0; opacity: 0.6; }
+        .bg-blur-1 { top: -5%; left: 50%; transform: translateX(-50%); width: 22rem; height: 22rem; 
+            background: rgba(14, 116, 144, 0.08); }
+        .bg-blur-2 { bottom: -5%; right: -5%; width: 18rem; height: 18rem; background: rgba(217, 119, 6, 0.08); }
+        .main-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; 
+            position: relative; z-index: 1; }
+        .main-content::-webkit-scrollbar { display: none; }
+        .content-wrapper { padding: 1rem 1.25rem 2rem; }
+        .card { background: linear-gradient(135deg, rgba(30, 41, 59, 0.65), rgba(15, 23, 42, 0.45)); 
+            border: 1px solid rgba(51, 65, 85, 0.4); border-radius: 1.25rem; }
+        .skill-header { background: linear-gradient(135deg, #0e7490, #d97706); }
+        .btn-primary { background: linear-gradient(to right, #0e7490, #d97706); color: white; font-weight: 600; 
+            border: none; padding: 1rem; border-radius: 1rem; cursor: pointer; width: 100%; font-size: 1rem; 
+            transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(14, 116, 144, 0.2); }
+        .btn-primary:hover, .btn-primary:active { opacity: 0.92; transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(14, 116, 144, 0.25); }
+        .progress-dots { display: flex; gap: 0.25rem; }
+        .progress-dot { flex: 1; height: 0.5rem; background: rgba(148, 163, 184, 0.25); border-radius: 9999px; }
+        .progress-dot.active { background: linear-gradient(to right, #0e7490, #d97706); }
+        .fade-in { animation: fadeIn 0.35s ease-out; }
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .timer-display { font-size: 4rem; font-weight: 700; background: linear-gradient(to right, #0e7490, #d97706); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .step-transition { animation: slideUp 0.4s ease-out; }
+        .journal-textarea { width: 100%; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(51, 65, 85, 0.4);
+            border-radius: 0.75rem; padding: 1rem; color: white; font-size: 16px; min-height: 140px; 
+            line-height: 1.6; margin-bottom: 1rem; resize: vertical; font-family: inherit; }
+        .journal-textarea:focus { outline: none; border-color: rgba(14, 116, 144, 0.5); 
+            background: rgba(30, 41, 59, 0.7); }
+        .prompt-chip { display: inline-block; padding: 0.75rem 1.25rem; background: rgba(14, 116, 144, 0.1);
+            border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 9999px; color: rgb(165, 243, 252);
+            font-size: 0.875rem; margin: 0.25rem; cursor: pointer; transition: all 0.2s ease; }
+        .prompt-chip:active { background: rgba(14, 116, 144, 0.2); transform: translateY(-1px); }
         .text-primary { color: rgb(241, 245, 249); }
         .text-secondary { color: rgb(203, 213, 225); }
         .text-muted { color: rgb(148, 163, 184); }
         .text-teal-light { color: rgb(165, 243, 252); }
-        
-        .nav-bar {
-            position: relative;
-            z-index: 1000;
-            border-top: 1px solid rgba(30, 41, 59, 0.5);
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(24px);
-            box-shadow: 0 -20px 25px -5px rgba(0, 0, 0, 0.3);
-            flex-shrink: 0;
-            padding: 0.75rem 0;
-        }
-        
-        .nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            max-width: 28rem;
-            margin: 0 auto;
-        }
-        
-        .nav-btn {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.5rem 1rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            min-width: 70px;
-            min-height: 60px;
-        }
-        
-        .nav-indicator {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2.5rem;
-            height: 3px;
-            background: linear-gradient(to right, #0e7490, #d97706);
-            border-radius: 9999px;
-        }
-        
-        .nav-indicator.hidden {
-            display: none;
-        }
-        
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-        
-        .nav-icon.active {
-            color: white !important;
-            transform: scale(1.1);
-        }
-        
-        .nav-icon.inactive {
-            color: rgb(100, 116, 139) !important;
-        }
-        
-        .nav-label {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        
+        .nav-bar { position: relative; z-index: 1000; border-top: 1px solid rgba(30, 41, 59, 0.5);
+            background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(24px); 
+            box-shadow: 0 -20px 25px -5px rgba(0, 0, 0, 0.3); flex-shrink: 0; padding: 0.75rem 0; }
+        .nav-container { display: flex; align-items: center; justify-content: space-around; max-width: 28rem; margin: 0 auto; }
+        .nav-btn { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.375rem;
+            padding: 0.5rem 1rem; background: none; border: none; cursor: pointer; transition: all 0.2s;
+            -webkit-tap-highlight-color: rgba(0,0,0,0); min-width: 80px; min-height: 60px; }
+        .nav-indicator { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2.5rem; 
+            height: 3px; background: linear-gradient(to right, #0e7490, #d97706); border-radius: 9999px; }
+        .nav-indicator.hidden { display: none; }
+        .nav-icon { width: 24px; height: 24px; transition: all 0.2s; flex-shrink: 0; }
+        .nav-icon.active { color: white !important; transform: scale(1.1); }
+        .nav-icon.inactive { color: rgb(100, 116, 139) !important; }
+        .nav-label { font-size: 0.6875rem; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
         .nav-label.active { color: white !important; }
         .nav-label.inactive { color: rgb(100, 116, 139) !important; }
-        
-        .timer-badge {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #d97706;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .timer-badge.active {
-            opacity: 1;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
+        .timer-badge { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; border-radius: 50%;
+            background: #d97706; opacity: 0; transition: opacity 0.3s ease; }
+        .timer-badge.active { opacity: 1; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9998;
+            display: flex; align-items: center; justify-content: center; padding: 1.25rem; }
+        .modal-content { background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 1.5rem; padding: 2rem;
+            max-width: 28rem; width: 100%; backdrop-filter: blur(10px); animation: slideUp 0.3s ease-out; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="app-wrapper" id="appWrapper">
+        <div class="app-wrapper">
             <div class="bg-blur-1"></div>
             <div class="bg-blur-2"></div>
-
             <div id="mainContent" class="main-content"></div>
-
             <div class="nav-bar">
                 <div class="nav-container">
                     <button onclick="app.switchTab('home')" class="nav-btn" data-tab="home">
@@ -357,114 +103,52 @@
                         </svg>
                         <span class="nav-label active">Home</span>
                     </button>
-                    
-                    <button onclick="app.switchTab('practice')" class="nav-btn" data-tab="practice">
+                    <button onclick="app.switchTab('paths')" class="nav-btn" data-tab="paths">
                         <div class="nav-indicator hidden"></div>
-                        <div class="timer-badge"></div>
                         <svg class="nav-icon inactive" stroke-width="2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
-                        <span class="nav-label inactive">Practice</span>
+                        <span class="nav-label inactive">Paths</span>
                     </button>
-                    
-                    <button onclick="app.switchTab('journal')" class="nav-btn" data-tab="journal">
+                    <button onclick="app.switchTab('you')" class="nav-btn" data-tab="you">
                         <div class="nav-indicator hidden"></div>
                         <svg class="nav-icon inactive" stroke-width="2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
-                        <span class="nav-label inactive">Journal</span>
-                    </button>
-                    
-                    <button onclick="app.switchTab('calendar')" class="nav-btn" data-tab="calendar">
-                        <div class="nav-indicator hidden"></div>
-                        <svg class="nav-icon inactive" stroke-width="2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        <span class="nav-label inactive">Calendar</span>
+                        <span class="nav-label inactive">You</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    <div id="modalContainer"></div>
 
     <script src="lessons-data.js"></script>
     <script>
-        // ===== FULLY INTEGRATED MPHaven App =====
         const app = {
             state: {
                 currentTab: 'home',
-                currentView: 'home', // 'home', 'courses', 'courseDetail', 'lesson', 'practice'
                 currentCourse: null,
-                currentSkill: null,
-                currentStep: 0,
-                practiceSkill: null,
                 userProgress: {},
-                
-                // Practice timer
+                journalEntries: [],
                 practiceTimerRunning: false,
                 practiceSeconds: 0,
                 practiceStartedAt: null,
-                practiceTargetTime: 30,
-                
-                // Journal
-                journalEntries: [],
-                promptsExpanded: false,
-                pendingJournalQuestions: null,
-                
-                // Calendar
-                scheduledPractices: {},
-                completedDates: []
+                practiceSkill: null,
+                practiceTargetTime: 30
             },
             
-            // ===== STATE MANAGEMENT =====
-            saveState() {
-                try {
-                    localStorage.setItem('mphaven_state', JSON.stringify(this.state));
-                } catch (e) {
-                    console.log('Failed to save state:', e);
-                }
-            },
+            saveState() { try { localStorage.setItem('mphaven_state', JSON.stringify(this.state)); } catch(e) {} },
+            loadState() { try { const s = localStorage.getItem('mphaven_state'); 
+                if(s) { const loaded = JSON.parse(s); this.state = {...this.state, ...loaded}; 
+                if(this.state.practiceTimerRunning && this.state.practiceStartedAt) {
+                    const elapsed = Math.floor((Date.now() - this.state.practiceStartedAt)/1000);
+                    this.state.practiceSeconds = Math.min(elapsed, this.state.practiceTargetTime);
+                    if(this.state.practiceSeconds >= this.state.practiceTargetTime) this.state.practiceTimerRunning = false;
+                    else this.resumePracticeTimer(); }}} catch(e) {} },
             
-            loadState() {
-                try {
-                    const saved = localStorage.getItem('mphaven_state');
-                    if (saved) {
-                        const loaded = JSON.parse(saved);
-                        this.state = { ...this.state, ...loaded };
-                        
-                        // Resume practice timer if it was running
-                        if (this.state.practiceTimerRunning && this.state.practiceStartedAt) {
-                            const elapsed = Math.floor((Date.now() - this.state.practiceStartedAt) / 1000);
-                            this.state.practiceSeconds = Math.min(elapsed, this.state.practiceTargetTime);
-                            if (this.state.practiceSeconds >= this.state.practiceTargetTime) {
-                                this.state.practiceTimerRunning = false;
-                            } else {
-                                this.resumePracticeTimer();
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.log('Failed to load state:', e);
-                }
-            },
-            
-            // ===== NAVIGATION =====
-            switchTab(tabName) {
-                this.state.currentTab = tabName;
-                
-                // Reset view when switching tabs
-                if (tabName === 'home') {
-                    this.state.currentView = 'home';
-                    this.state.currentCourse = null;
-                    this.state.currentSkill = null;
-                }
-                
-                this.saveState();
-                this.updateNav(tabName);
-                this.updateTimerBadge();
-                this.render();
-            },
+            switchTab(tabName) { this.state.currentTab = tabName; this.saveState(); this.updateNav(tabName); 
+                this.updateTimerBadge(); this.render(); },
             
             updateNav(tabName) {
                 document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -472,22 +156,12 @@
                     const icon = btn.querySelector('.nav-icon');
                     const label = btn.querySelector('.nav-label');
                     const isActive = btn.dataset.tab === tabName;
-                    
-                    if (isActive) {
-                        indicator.classList.remove('hidden');
-                        icon.classList.remove('inactive');
-                        icon.classList.add('active');
-                        icon.setAttribute('stroke-width', '2.5');
-                        label.classList.remove('inactive');
-                        label.classList.add('active');
-                    } else {
-                        indicator.classList.add('hidden');
-                        icon.classList.remove('active');
-                        icon.classList.add('inactive');
-                        icon.setAttribute('stroke-width', '2');
-                        label.classList.remove('active');
-                        label.classList.add('inactive');
-                    }
+                    if(isActive) { indicator.classList.remove('hidden'); icon.classList.remove('inactive');
+                        icon.classList.add('active'); icon.setAttribute('stroke-width','2.5');
+                        label.classList.remove('inactive'); label.classList.add('active'); }
+                    else { indicator.classList.add('hidden'); icon.classList.remove('active');
+                        icon.classList.add('inactive'); icon.setAttribute('stroke-width','2');
+                        label.classList.remove('active'); label.classList.add('inactive'); }
                 });
             },
             
@@ -497,301 +171,164 @@
                 });
             },
             
-            // ===== HOME & COURSES =====
-            openCourses() {
-                this.state.currentView = 'courses';
-                this.state.currentCourse = null;
-                this.saveState();
-                this.render();
+            // SHOW SKILL OPTIONS MODAL (Like your original!)
+            showSkillOptions(courseId, skillId) {
+                const course = window.lessonsData[courseId];
+                const skill = course.skills[skillId];
+                
+                const modal = `
+                    <div class="modal-overlay" onclick="if(event.target===this) app.closeModal()">
+                        <div class="modal-content" onclick="event.stopPropagation()">
+                            <div style="text-align:center">
+                                <div style="font-size:3rem;margin-bottom:1rem">${skill.icon}</div>
+                                <h2 class="text-primary" style="font-size:1.75rem;font-weight:700;margin-bottom:0.5rem">${skill.name}</h2>
+                                <p class="text-secondary" style="margin-bottom:1.5rem;font-size:0.875rem">${skill.tagline}</p>
+                                
+                                <div style="text-align:left;margin-bottom:1.5rem">
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">${skill.description}</p>
+                                </div>
+                                
+                                <div style="text-align:left;background:rgba(14,116,144,0.08);padding:1rem;border-radius:1rem;margin-bottom:1.5rem;border-left:3px solid rgba(14,116,144,0.4)">
+                                    <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.5rem;font-size:0.9375rem">Why this works:</p>
+                                    <p class="text-secondary" style="font-size:0.9375rem;line-height:1.6">${skill.why || 'Master this skill to deepen your practice.'}</p>
+                                </div>
+                                
+                                <div style="display:grid;gap:0.75rem">
+                                    <button onclick="app.startLesson('${courseId}','${skillId}')" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:0.5rem">
+                                        <svg style="width:1.25rem;height:1.25rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                        </svg>
+                                        Learn This Skill
+                                    </button>
+                                    
+                                    <button onclick="app.startPracticeFromModal('${courseId}','${skillId}')" style="width:100%;padding:1rem;border-radius:1rem;background:rgba(14,116,144,0.12);border:1px solid rgba(14,116,144,0.35);color:rgb(165,243,252);font-weight:600;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem">
+                                        <svg style="width:1.25rem;height:1.25rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Practice Now (${skill.practiceDuration}s)
+                                    </button>
+                                    
+                                    <button onclick="app.closeModal()" style="width:100%;padding:0.75rem;border-radius:0.75rem;background:transparent;color:rgb(148,163,184);font-weight:500;border:none;font-size:0.875rem;cursor:pointer">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('modalContainer').innerHTML = modal;
             },
             
-            openCourse(courseId) {
-                this.state.currentView = 'courseDetail';
-                this.state.currentCourse = courseId;
-                this.saveState();
-                this.render();
-            },
+            closeModal() { document.getElementById('modalContainer').innerHTML = ''; },
             
-            startSkill(courseId, skillId) {
-                this.state.currentView = 'lesson';
+            startLesson(courseId, skillId) {
+                this.closeModal();
                 this.state.currentCourse = courseId;
                 this.state.currentSkill = skillId;
                 this.state.currentStep = 0;
                 this.saveState();
-                this.render();
+                this.renderLesson();
+            },
+            
+            startPracticeFromModal(courseId, skillId) {
+                this.closeModal();
+                const skill = window.lessonsData[courseId].skills[skillId];
+                this.state.practiceSkill = skillId;
+                this.state.practiceTargetTime = skill.practiceDuration || 30;
+                this.state.practiceSeconds = 0;
+                this.state.practiceTimerRunning = true;
+                this.state.practiceStartedAt = Date.now();
+                this.saveState();
+                this.updateTimerBadge();
+                this.switchTab('you'); // Switch to You tab for standalone practice
+                this.startPracticeTimer();
             },
             
             nextStep() {
                 const course = window.lessonsData[this.state.currentCourse];
                 const skill = course.skills[this.state.currentSkill];
-                const currentStep = skill.steps[this.state.currentStep];
                 
-                // Check if this step has journal questions
-                if (currentStep.hasJournalPrompt && currentStep.journalQuestions) {
-                    this.state.pendingJournalQuestions = {
-                        questions: currentStep.journalQuestions,
-                        skill: skill.name,
-                        skillId: this.state.currentSkill
-                    };
-                    this.saveState();
-                }
-                
-                if (this.state.currentStep < skill.steps.length - 1) {
+                if(this.state.currentStep < skill.steps.length - 1) {
                     this.state.currentStep++;
                     this.saveState();
-                    this.render();
+                    this.renderLesson();
                 } else {
-                    // Lesson complete!
-                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-                    
-                    if (!this.state.userProgress[this.state.currentSkill]) {
-                        this.state.userProgress[this.state.currentSkill] = { 
-                            completed: true, 
-                            date: new Date().toISOString() 
-                        };
+                    confetti({particleCount:100,spread:70,origin:{y:0.6}});
+                    if(!this.state.userProgress[this.state.currentSkill]) {
+                        this.state.userProgress[this.state.currentSkill] = {completed:true,date:new Date().toISOString()};
                         this.saveState();
                     }
-                    
-                    // If there are journal questions, go to journal
-                    if (this.state.pendingJournalQuestions) {
-                        setTimeout(() => this.switchTab('journal'), 1000);
-                    } else {
-                        setTimeout(() => {
-                            this.state.currentView = 'home';
-                            this.switchTab('home');
-                        }, 1500);
-                    }
+                    setTimeout(() => this.switchTab('home'), 1500);
                 }
-            },
-            
-            // ===== PRACTICE TAB =====
-            startPractice(skillId) {
-                this.state.practiceSkill = skillId;
-                this.state.practiceSeconds = 0;
-                
-                // Get the skill to find target time
-                for (const courseId in window.lessonsData) {
-                    const course = window.lessonsData[courseId];
-                    if (course.skills[skillId]) {
-                        this.state.practiceTargetTime = course.skills[skillId].practiceDuration || 30;
-                        break;
-                    }
-                }
-                
-                this.state.practiceTimerRunning = true;
-                this.state.practiceStartedAt = Date.now();
-                this.saveState();
-                this.updateTimerBadge();
-                this.render();
-                this.startPracticeTimer();
-            },
-            
-            stopPractice() {
-                this.state.practiceTimerRunning = false;
-                this.state.practiceSeconds = Math.min(this.state.practiceSeconds, this.state.practiceTargetTime);
-                if (this.practiceInterval) {
-                    clearInterval(this.practiceInterval);
-                    this.practiceInterval = null;
-                }
-                this.updateTimerBadge();
-                this.saveState();
-                
-                // Mark as completed today
-                const today = new Date().toDateString();
-                if (!this.state.completedDates.includes(today)) {
-                    this.state.completedDates.push(today);
-                    this.saveState();
-                }
-                
-                this.showPracticeComplete();
             },
             
             startPracticeTimer() {
                 this.practiceInterval = setInterval(() => {
-                    if (!this.state.practiceTimerRunning) {
-                        clearInterval(this.practiceInterval);
-                        return;
-                    }
-                    
+                    if(!this.state.practiceTimerRunning) { clearInterval(this.practiceInterval); return; }
                     const now = Date.now();
-                    this.state.practiceSeconds = Math.floor((now - this.state.practiceStartedAt) / 1000);
-                    
+                    this.state.practiceSeconds = Math.floor((now - this.state.practiceStartedAt)/1000);
                     const display = document.getElementById('practiceTimerDisplay');
-                    if (display) {
-                        const remaining = this.state.practiceTargetTime - this.state.practiceSeconds;
-                        display.textContent = Math.max(0, remaining);
-                    }
-                    
-                    if (this.state.practiceSeconds >= this.state.practiceTargetTime) {
-                        this.stopPractice();
-                    }
-                    
+                    if(display) { const remaining = this.state.practiceTargetTime - this.state.practiceSeconds;
+                        display.textContent = Math.max(0, remaining); }
+                    if(this.state.practiceSeconds >= this.state.practiceTargetTime) this.stopPractice();
                     this.saveState();
                 }, 1000);
             },
             
-            resumePracticeTimer() {
-                if (this.state.practiceTimerRunning) {
-                    this.startPracticeTimer();
-                }
-            },
+            resumePracticeTimer() { if(this.state.practiceTimerRunning) this.startPracticeTimer(); },
             
-            showPracticeComplete() {
-                setTimeout(() => {
-                    const complete = document.getElementById('practiceComplete');
-                    if (complete) {
-                        complete.classList.remove('hidden');
-                    }
-                }, 500);
-            },
-            
-            // ===== JOURNAL TAB =====
-            saveJournalEntry(text) {
-                if (!text || !text.trim()) {
-                    alert("Write something first");
-                    return;
-                }
-                
-                const entry = {
-                    id: Date.now(),
-                    date: new Date().toISOString(),
-                    content: text,
-                    skill: this.state.practiceSkill || 'General',
-                    fromLesson: !!this.state.pendingJournalQuestions
-                };
-                
-                if (this.state.pendingJournalQuestions) {
-                    entry.lessonSkill = this.state.pendingJournalQuestions.skill;
-                    this.state.pendingJournalQuestions = null;
-                }
-                
-                this.state.journalEntries.unshift(entry);
+            stopPractice() {
+                this.state.practiceTimerRunning = false;
+                this.state.practiceSeconds = Math.min(this.state.practiceSeconds, this.state.practiceTargetTime);
+                if(this.practiceInterval) { clearInterval(this.practiceInterval); this.practiceInterval = null; }
+                this.updateTimerBadge();
                 this.saveState();
-                
-                const textarea = document.getElementById('journalText');
-                if (textarea) textarea.value = '';
-                
-                this.render();
-                
-                setTimeout(() => {
-                    const mainContent = document.querySelector('.main-content');
-                    if (mainContent) mainContent.scrollTop = 0;
-                }, 100);
+                setTimeout(() => this.render(), 500);
             },
             
-            deleteJournalEntry(entryId) {
-                if (confirm("Delete this reflection? This can't be undone.")) {
-                    this.state.journalEntries = this.state.journalEntries.filter(e => e.id !== entryId);
-                    this.saveState();
-                    this.render();
-                }
-            },
-            
-            addPromptToJournal(prompt) {
-                const textarea = document.getElementById('journalText');
-                if (textarea) {
-                    const current = textarea.value.trim();
-                    textarea.value = current + (current ? '\n\n' : '') + prompt + '\n\n';
-                    textarea.focus();
-                    setTimeout(() => {
-                        textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
-                }
-            },
-            
-            togglePrompts() {
-                this.state.promptsExpanded = !this.state.promptsExpanded;
-                this.saveState();
-                const container = document.querySelector('.prompts-container');
-                if (container) {
-                    container.style.maxHeight = this.state.promptsExpanded ? '200px' : '0';
-                    container.style.opacity = this.state.promptsExpanded ? '1' : '0';
-                }
-            },
-            
-            // ===== CALENDAR TAB =====
-            togglePracticeDay(dateStr) {
-                if (this.state.scheduledPractices[dateStr]) {
-                    delete this.state.scheduledPractices[dateStr];
-                } else {
-                    this.state.scheduledPractices[dateStr] = true;
-                }
-                this.saveState();
-                this.render();
-            },
-            
-            // ===== MAIN RENDER =====
             render() {
-                const mainContent = document.getElementById('mainContent');
-                mainContent.scrollTop = 0;
+                const content = document.getElementById('mainContent');
+                content.scrollTop = 0;
                 
-                switch(this.state.currentTab) {
-                    case 'home':
-                        if (this.state.currentView === 'courses') {
-                            this.renderCourses();
-                        } else if (this.state.currentView === 'courseDetail') {
-                            this.renderCourseDetail();
-                        } else if (this.state.currentView === 'lesson') {
-                            this.renderLesson();
-                        } else {
-                            this.renderHome();
-                        }
-                        break;
-                    case 'practice':
-                        this.renderPractice();
-                        break;
-                    case 'journal':
-                        this.renderJournal();
-                        break;
-                    case 'calendar':
-                        this.renderCalendar();
-                        break;
-                    default:
-                        this.renderHome();
+                if(this.state.currentSkill && this.state.currentCourse && this.state.currentTab === 'home') {
+                    this.renderLesson();
+                } else {
+                    switch(this.state.currentTab) {
+                        case 'home': this.renderHome(); break;
+                        case 'paths': this.renderPaths(); break;
+                        case 'you': this.renderYou(); break;
+                        default: this.renderHome();
+                    }
                 }
             },
-            
-            // Individual render functions follow...
-            // (continuing in next part due to length)
             
             renderHome() {
-                const mindfulnessCourse = window.lessonsData.mindfulness;
-                const skillsArray = Object.values(mindfulnessCourse.skills).slice(0, 3);
-                
                 const html = `
                     <div class="content-wrapper">
-                        <div style="padding: 2rem 0 1.5rem">
-                            <h1 class="text-primary" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.1">
+                        <div style="padding:2rem 0 1.5rem">
+                            <h1 class="text-primary" style="font-size:2.5rem;font-weight:700;margin-bottom:0.5rem;line-height:1.1">
                                 Welcome<br/>back
                             </h1>
-                            <p class="text-secondary" style="font-size: 1.125rem">
-                                Your sanctuary is here.
-                            </p>
+                            <p class="text-secondary" style="font-size:1.125rem">Your sanctuary is here.</p>
                         </div>
 
-                        <div style="margin-bottom: 2rem">
-                            <h2 class="text-muted" style="font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em">
-                                Continue Learning
+                        <div style="margin-bottom:2rem">
+                            <h2 class="text-muted" style="font-size:0.875rem;font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.05em">
+                                Continue
                             </h2>
                             
-                            ${skillsArray.map(skill => `
-                                <div onclick="app.startSkill('mindfulness', '${skill.id}')" class="card" style="padding: 1.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, rgba(14, 116, 144, 0.15) 0%, rgba(14, 116, 144, 0.05) 100%); border: 2px solid rgba(14, 116, 144, 0.5); cursor: pointer;">
-                                    <div style="display: flex; align-items: center; gap: 1rem">
-                                        <div style="width: 3.5rem; height: 3.5rem; background: ${mindfulnessCourse.color}; border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem">
-                                            ${skill.icon}
+                            ${Object.values(window.lessonsData.mindfulness.skills).slice(0,2).map(skill => `
+                                <div onclick="app.showSkillOptions('mindfulness','${skill.id}')" class="card" style="padding:1.5rem;margin-bottom:1rem;background:linear-gradient(135deg,rgba(14,116,144,0.15) 0%,rgba(14,116,144,0.05) 100%);border:2px solid rgba(14,116,144,0.5);cursor:pointer">
+                                    <div style="display:flex;align-items:center;gap:1rem">
+                                        <div style="width:3.5rem;height:3.5rem;background:#d97706;border-radius:1rem;display:flex;align-items:center;justify-content:center;color:white;font-size:1.75rem">${skill.icon}</div>
+                                        <div style="flex:1">
+                                            <h3 class="text-primary" style="font-size:1.25rem;font-weight:600;margin-bottom:0.25rem">${skill.name}</h3>
+                                            <p class="text-secondary" style="font-size:0.875rem">${skill.tagline}</p>
                                         </div>
-                                        
-                                        <div style="flex: 1">
-                                            <h3 class="text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem">
-                                                ${skill.name}
-                                            </h3>
-                                            <p class="text-secondary" style="font-size: 0.875rem">
-                                                ${skill.tagline}
-                                            </p>
-                                        </div>
-                                        
-                                        <div style="width: 2.5rem; height: 2.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: rgba(14, 116, 144, 0.2);">
-                                            <svg style="width: 1.25rem; height: 1.25rem; color: rgb(165, 243, 252);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div style="width:2.5rem;height:2.5rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:rgba(14,116,144,0.2)">
+                                            <svg style="width:1.25rem;height:1.25rem;color:rgb(165,243,252)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                             </svg>
                                         </div>
@@ -801,98 +338,109 @@
                         </div>
 
                         <div>
-                            <h2 class="text-muted" style="font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em">
+                            <h2 class="text-muted" style="font-size:0.875rem;font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.05em">
                                 Explore
                             </h2>
-                            
-                            <button onclick="app.openCourses()" class="card" style="padding: 1rem; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 1rem; cursor: pointer; width: 100%;">
-                                <span class="text-primary" style="font-weight: 600; font-size: 1rem">View all courses</span>
+                            <button onclick="app.switchTab('paths')" class="card" style="padding:1rem;background:rgba(30,41,59,0.5);border:1px solid rgba(51,65,85,0.5);border-radius:1rem;cursor:pointer;width:100%">
+                                <span class="text-primary" style="font-weight:600;font-size:1rem">View all paths</span>
                             </button>
                         </div>
                     </div>
                 `;
-                
                 document.getElementById('mainContent').innerHTML = html;
             },
             
-            renderCourses() {
+            renderPaths() {
                 const courses = Object.values(window.lessonsData);
-                
                 const html = `
                     <div class="content-wrapper">
-                        <div style="padding: 1.5rem 0 1rem">
-                            <button onclick="app.state.currentView='home';app.render()" style="background:none;border:none;color:white;font-size:1.5rem;margin-bottom:1rem;cursor:pointer">←</button>
-                            <h1 class="text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem">
-                                Courses
-                            </h1>
-                            <p class="text-secondary" style="font-size: 1rem">
-                                Choose what speaks to you
-                            </p>
+                        <div style="padding:1.5rem 0 1rem">
+                            <h1 class="text-primary" style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">Your Paths</h1>
+                            <p class="text-secondary" style="font-size:1rem">Choose what speaks to you</p>
                         </div>
                         
                         ${courses.map(course => `
-                            <div onclick="app.openCourse('${course.id}')" class="card" style="padding: 1.5rem; margin-bottom: 1rem; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 1rem">
-                                    <div style="width: 4rem; height: 4rem; background: ${course.color}; border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem">
-                                        ${course.icon}
+                            <div class="card" style="padding:1.5rem;margin-bottom:1rem">
+                                <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+                                    <div style="width:4rem;height:4rem;background:${course.color};border-radius:1rem;display:flex;align-items:center;justify-content:center;color:white;font-size:2rem">${course.icon}</div>
+                                    <div style="flex:1">
+                                        <h3 class="text-primary" style="font-size:1.25rem;font-weight:600;margin-bottom:0.25rem">${course.title}</h3>
+                                        <p class="text-secondary" style="font-size:0.875rem">${course.description}</p>
                                     </div>
-                                    
-                                    <div style="flex: 1">
-                                        <h3 class="text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem">
-                                            ${course.title}
-                                        </h3>
-                                        <p class="text-secondary" style="font-size: 0.875rem">
-                                            ${course.description}
-                                        </p>
-                                    </div>
+                                </div>
+                                
+                                <div style="display:flex;flex-direction:column;gap:0.75rem">
+                                    ${Object.values(course.skills).map(skill => `
+                                        <button onclick="app.showSkillOptions('${course.id}','${skill.id}')" class="card" style="padding:1rem;cursor:pointer;width:100%;text-align:left;background:rgba(30,41,59,0.3);border:1px solid rgba(71,85,105,0.3)">
+                                            <div style="display:flex;align-items:center;gap:1rem">
+                                                <div style="width:2.5rem;height:2.5rem;background:${course.color};border-radius:0.75rem;display:flex;align-items:center;justify-content:center;color:white;font-size:1.25rem">${skill.icon}</div>
+                                                <div style="flex:1">
+                                                    <h4 class="text-primary" style="font-weight:600;font-size:1rem;margin-bottom:0.125rem">${skill.name}</h4>
+                                                    <p class="text-secondary" style="font-size:0.8125rem">${skill.tagline}</p>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    `).join('')}
                                 </div>
                             </div>
                         `).join('')}
                     </div>
                 `;
-                
                 document.getElementById('mainContent').innerHTML = html;
             },
             
-            renderCourseDetail() {
-                const course = window.lessonsData[this.state.currentCourse];
-                const skills = Object.values(course.skills);
+            renderYou() {
+                const completedCount = Object.values(this.state.userProgress).filter(p => p.completed).length;
                 
-                const html = `
-                    <div class="content-wrapper">
-                        <div style="margin-bottom: 2rem">
-                            <button onclick="app.state.currentView='courses';app.render()" style="background: none; border: none; color: white; font-size: 1.5rem; margin-bottom: 1rem; cursor: pointer">←</button>
-                            <h1 class="text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem">
-                                ${course.title}
-                            </h1>
-                            <p class="text-secondary" style="font-size: 1rem">
-                                ${course.description}
-                            </p>
-                        </div>
-                        
-                        <div>
-                            ${skills.map(skill => `
-                                <button onclick="app.startSkill('${course.id}', '${skill.id}')" class="card" style="padding: 1.25rem; background: linear-gradient(135deg, rgba(30, 41, 59, 0.3), rgba(15, 23, 42, 0.2)); border: 1px solid rgba(71, 85, 105, 0.3); border-radius: 1.25rem; text-align: left; margin-bottom: 0.75rem; cursor: pointer; width: 100%;">
-                                    <div style="display: flex; align-items: start; gap: 1rem">
-                                        <div style="width: 3rem; height: 3rem; border-radius: 0.875rem; background: ${course.color}; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0">
-                                            ${skill.icon}
-                                        </div>
-                                        <div style="flex: 1">
-                                            <h3 class="text-primary" style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem">
-                                                ${skill.name}
-                                            </h3>
-                                            <p class="text-secondary" style="font-size: 0.875rem">
-                                                ${skill.tagline}
-                                            </p>
-                                        </div>
-                                    </div>
+                // Check if practice is running
+                if(this.state.practiceTimerRunning && this.state.practiceSkill) {
+                    const skill = Object.values(window.lessonsData).flatMap(c => Object.values(c.skills))
+                        .find(s => s.id === this.state.practiceSkill);
+                    const remaining = this.state.practiceTargetTime - this.state.practiceSeconds;
+                    
+                    const html = `
+                        <div class="content-wrapper">
+                            <div style="margin-bottom:2rem">
+                                <h1 class="text-primary" style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">
+                                    ${skill ? skill.name : 'Practice'}
+                                </h1>
+                                <p class="text-secondary" style="font-size:1rem">
+                                    ${skill ? skill.tagline : 'Focus on your practice'}
+                                </p>
+                            </div>
+                            
+                            <div class="card" style="padding:2rem;margin-bottom:1.5rem;text-align:center;background:linear-gradient(135deg,rgba(14,116,144,0.08),rgba(217,119,6,0.08))">
+                                <div class="timer-display" id="practiceTimerDisplay" style="margin-bottom:1rem">${remaining}</div>
+                                <p class="text-secondary" style="margin-bottom:1.5rem;font-size:1rem">
+                                    Focus on your breath. When thoughts arise, just notice them.
+                                </p>
+                                <button onclick="app.stopPractice()" class="btn-primary" style="background:rgba(239,68,68,0.2);border:2px solid rgba(239,68,68,0.4);color:rgb(252,165,165)">
+                                    ⏹️ Stop Practice
                                 </button>
-                            `).join('')}
+                            </div>
                         </div>
-                    </div>
-                `;
-                
-                document.getElementById('mainContent').innerHTML = html;
+                    `;
+                    document.getElementById('mainContent').innerHTML = html;
+                } else {
+                    const html = `
+                        <div class="content-wrapper">
+                            <div style="padding:1.5rem 0 1rem">
+                                <h1 class="text-primary" style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">You</h1>
+                                <p class="text-secondary" style="font-size:1rem">Your mindfulness journey</p>
+                            </div>
+                            
+                            <div class="card" style="padding:2rem;margin-bottom:2rem;background:rgba(14,116,144,0.1);border:1px solid rgba(14,116,144,0.2)">
+                                <div class="text-teal-light" style="font-size:3rem;font-weight:700;margin-bottom:0.5rem;text-align:center">${completedCount}</div>
+                                <div class="text-secondary" style="font-size:1rem;text-align:center">Skills Learned</div>
+                            </div>
+                            
+                            <button onclick="if(confirm('Reset all progress?')){app.state.userProgress={};app.saveState();app.render()}" class="card" style="padding:1rem;text-align:left;border:1px solid rgba(239,68,68,0.3);color:rgb(254,202,202);font-weight:500;cursor:pointer;background:rgba(239,68,68,0.1);width:100%">
+                                Reset Progress
+                            </button>
+                        </div>
+                    `;
+                    document.getElementById('mainContent').innerHTML = html;
+                }
             },
             
             renderLesson() {
@@ -905,57 +453,39 @@
                     <div class="step-transition">
                         <div class="card" style="padding:1rem;margin-bottom:1rem">
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
-                                <button onclick="app.state.currentView='home';app.switchTab('home')" style="background:none;border:none;color:white;font-size:1.5rem;cursor:pointer;padding:0.25rem">←</button>
+                                <button onclick="app.state.currentSkill=null;app.state.currentCourse=null;app.switchTab('home')" style="background:none;border:none;color:white;font-size:1.5rem;cursor:pointer;padding:0.25rem">←</button>
                                 <h1 class="text-primary" style="font-weight:600;font-size:1.125rem">${step.title}</h1>
-                                <div class="text-muted" style="font-size:0.875rem">${this.state.currentStep + 1}/${totalSteps}</div>
+                                <div class="text-muted" style="font-size:0.875rem">${this.state.currentStep+1}/${totalSteps}</div>
                             </div>
                             <div class="progress-dots">
-                                ${Array(totalSteps).fill().map((_, i) => `<div class="progress-dot ${i <= this.state.currentStep ? 'active' : ''}"></div>`).join('')}
+                                ${Array(totalSteps).fill().map((_,i) => `<div class="progress-dot ${i<=this.state.currentStep?'active':''}"></div>`).join('')}
                             </div>
                         </div>
-                        
                         ${step.renderContent()}
-                        
                         <div class="content-wrapper">
                             <button onclick="app.nextStep()" class="btn-primary" style="margin-bottom:1rem">
-                                ${this.state.currentStep < totalSteps - 1 ? 'Continue →' : 'Finish Lesson ✨'}
+                                ${this.state.currentStep < totalSteps-1 ? 'Continue →' : 'Finish Lesson ✨'}
                             </button>
                         </div>
                     </div>
                 `;
-                
                 document.getElementById('mainContent').innerHTML = html;
                 
-                // Setup timers if needed
-                if (step.hasTimer) {
-                    this.setupLessonTimer(step.timerDuration || 30);
-                }
-                
-                if (step.hasPractice) {
-                    this.setupPracticeInLesson(step.practiceDuration, step.practicePrompts);
-                }
+                if(step.hasTimer) this.setupLessonTimer(step.timerDuration||30);
+                if(step.hasPractice) this.setupPracticeInLesson(step.practiceDuration, step.practicePrompts);
             },
             
             setupLessonTimer(duration) {
                 setTimeout(() => {
                     const button = document.getElementById('timerButton');
-                    if (button) {
+                    if(button) {
                         button.onclick = () => {
                             let timeLeft = duration;
                             const display = document.getElementById('timerDisplay');
-                            
-                            button.disabled = true;
-                            button.textContent = 'Focus...';
-                            button.style.opacity = '0.5';
-                            
+                            button.disabled = true; button.textContent = 'Focus...'; button.style.opacity = '0.5';
                             const interval = setInterval(() => {
-                                timeLeft--;
-                                display.textContent = timeLeft;
-                                
-                                if (timeLeft <= 0) {
-                                    clearInterval(interval);
-                                    button.textContent = 'Complete!';
-                                }
+                                timeLeft--; display.textContent = timeLeft;
+                                if(timeLeft <= 0) { clearInterval(interval); button.textContent = 'Complete!'; }
                             }, 1000);
                         };
                     }
@@ -965,354 +495,32 @@
             setupPracticeInLesson(duration, prompts) {
                 setTimeout(() => {
                     const button = document.getElementById('practiceButton');
-                    if (button) {
+                    if(button) {
                         button.onclick = () => {
-                            let timeLeft = duration;
-                            let promptIndex = 0;
+                            let timeLeft = duration; let promptIndex = 0;
                             const display = document.getElementById('practiceDisplay');
                             const promptEl = document.getElementById('practicePrompt');
-                            
-                            button.disabled = true;
-                            button.textContent = 'Practicing...';
-                            button.style.opacity = '0.5';
-                            
-                            if (promptEl && prompts && prompts.length > 0) {
+                            button.disabled = true; button.textContent = 'Practicing...'; button.style.opacity = '0.5';
+                            if(promptEl && prompts && prompts.length>0) 
                                 promptEl.innerHTML = `<p style="color:rgb(165,243,252);font-style:italic;font-size:1.125rem;font-weight:500">${prompts[0]}</p>`;
-                            }
-                            
                             const interval = setInterval(() => {
-                                timeLeft--;
-                                display.textContent = timeLeft;
-                                
-                                if (prompts && promptEl && timeLeft % 8 === 0 && promptIndex < prompts.length - 1) {
+                                timeLeft--; display.textContent = timeLeft;
+                                if(prompts && promptEl && timeLeft%8===0 && promptIndex<prompts.length-1) {
                                     promptIndex++;
                                     promptEl.innerHTML = `<p style="color:rgb(165,243,252);font-style:italic;font-size:1.125rem;font-weight:500">${prompts[promptIndex]}</p>`;
                                 }
-                                
-                                if (timeLeft <= 0) {
-                                    clearInterval(interval);
-                                    if (promptEl) {
-                                        promptEl.innerHTML = `<p style="color:rgb(134,239,172);font-weight:600;font-size:1.125rem">✨ Beautiful. Take a moment...</p>`;
-                                    }
-                                    button.textContent = 'Complete!';
-                                }
+                                if(timeLeft <= 0) { clearInterval(interval);
+                                    if(promptEl) promptEl.innerHTML = `<p style="color:rgb(134,239,172);font-weight:600;font-size:1.125rem">✨ Beautiful. Take a moment...</p>`;
+                                    button.textContent = 'Complete!'; }
                             }, 1000);
                         };
                     }
                 }, 100);
             },
             
-            renderPractice() {
-                const allSkills = [];
-                for (const courseId in window.lessonsData) {
-                    const course = window.lessonsData[courseId];
-                    Object.values(course.skills).forEach(skill => {
-                        allSkills.push({ ...skill, courseId, courseColor: course.color });
-                    });
-                }
-                
-                const currentSkill = this.state.practiceSkill ? 
-                    allSkills.find(s => s.id === this.state.practiceSkill) : 
-                    allSkills[0];
-                
-                if (this.state.practiceTimerRunning && currentSkill) {
-                    const remaining = this.state.practiceTargetTime - this.state.practiceSeconds;
-                    
-                    const html = `
-                        <div class="content-wrapper">
-                            <div style="margin-bottom: 2rem">
-                                <h1 class="text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem">
-                                    ${currentSkill.name}
-                                </h1>
-                                <p class="text-secondary" style="font-size: 1rem">
-                                    ${currentSkill.tagline}
-                                </p>
-                            </div>
-                            
-                            <div class="card" style="padding: 2rem; margin-bottom: 1.5rem; text-align: center; background: linear-gradient(135deg, rgba(14, 116, 144, 0.08), rgba(217, 119, 6, 0.08))">
-                                <div class="timer-display" id="practiceTimerDisplay" style="margin-bottom: 1rem">${remaining}</div>
-                                <p class="text-secondary" style="margin-bottom: 1.5rem; font-size: 1rem">
-                                    Focus on your breath. When thoughts arise, just notice them.
-                                </p>
-                                <button onclick="app.stopPractice()" class="btn-primary" style="background: rgba(239, 68, 68, 0.2); border: 2px solid rgba(239, 68, 68, 0.4);">
-                                    Stop Practice
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    
-                    document.getElementById('mainContent').innerHTML = html;
-                } else {
-                    const html = `
-                        <div class="content-wrapper">
-                            <div style="padding: 1.5rem 0 1rem">
-                                <h1 class="text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem">
-                                    Practice
-                                </h1>
-                                <p class="text-secondary" style="font-size: 1rem">
-                                    Choose a skill to practice
-                                </p>
-                            </div>
-                            
-                            <div id="practiceComplete" class="${this.state.practiceSeconds >= this.state.practiceTargetTime ? '' : 'hidden'}" style="margin-bottom: 2rem">
-                                <div class="card" style="padding: 2rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); text-align: center">
-                                    <div style="font-size: 3rem; margin-bottom: 1rem">✨</div>
-                                    <h2 class="text-primary" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem">
-                                        Practice Complete!
-                                    </h2>
-                                    <p class="text-secondary" style="margin-bottom: 1.5rem">
-                                        Would you like to capture your insights?
-                                    </p>
-                                    <button onclick="app.switchTab('journal')" class="btn-primary">
-                                        Journal About It
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            ${allSkills.map(skill => `
-                                <button onclick="app.startPractice('${skill.id}')" class="card" style="padding: 1.25rem; margin-bottom: 1rem; cursor: pointer; width: 100%; text-align: left; background: linear-gradient(135deg, rgba(${skill.courseColor === '#0e7490' ? '14, 116, 144' : '217, 119, 6'}, 0.1), rgba(${skill.courseColor === '#0e7490' ? '14, 116, 144' : '217, 119, 6'}, 0.05));">
-                                    <div style="display: flex; align-items: center; gap: 1rem">
-                                        <div style="width: 3.5rem; height: 3.5rem; background: ${skill.courseColor}; border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem; flex-shrink: 0">
-                                            ${skill.icon}
-                                        </div>
-                                        <div style="flex: 1">
-                                            <h3 class="text-primary" style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.25rem">
-                                                ${skill.name}
-                                            </h3>
-                                            <p class="text-secondary" style="font-size: 0.875rem">
-                                                ${skill.practiceDuration}s practice
-                                            </p>
-                                        </div>
-                                    </div>
-                                </button>
-                            `).join('')}
-                        </div>
-                    `;
-                    
-                    document.getElementById('mainContent').innerHTML = html;
-                }
-            },
-            
-            renderJournal() {
-                const journalPrompts = [
-                    { title: "Reflection", question: "What did you notice during your practice?", icon: "💭" },
-                    { title: "Body Awareness", question: "Where did you feel sensations in your body?", icon: "🌡️" },
-                    { title: "Emotional Weather", question: "What emotions visited you, and how did they feel?", icon: "🌤️" },
-                    { title: "Mind Patterns", question: "What thoughts kept returning?", icon: "🌀" }
-                ];
-                
-                let initialText = '';
-                if (this.state.pendingJournalQuestions) {
-                    initialText = this.state.pendingJournalQuestions.questions
-                        .map(q => `Q: ${q}\n\nA: `)
-                        .join('\n\n');
-                }
-                
-                const html = `
-                    <div class="content-wrapper">
-                        <div style="padding: 1.5rem 0 1rem">
-                            <h1 class="text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem">
-                                Your Journal
-                            </h1>
-                            <p class="text-secondary" style="font-size: 1rem">
-                                ${this.state.journalEntries.length} thoughtful reflections
-                            </p>
-                        </div>
-                        
-                        <div style="margin-bottom: 2rem">
-                            <div class="card" style="padding: 1rem; margin-bottom: 1rem">
-                                <textarea 
-                                    id="journalText"
-                                    placeholder="What's alive in your experience right now?..."
-                                    class="journal-textarea"
-                                >${initialText}</textarea>
-                                <button onclick="app.saveJournalEntry(document.getElementById('journalText').value)" class="btn-primary">
-                                    Save Reflection
-                                </button>
-                            </div>
-                            
-                            <button onclick="app.togglePrompts()" style="background: none; border: none; color: rgb(148, 163, 184); font-size: 0.875rem; padding: 0.75rem 0; cursor: pointer; width: 100%; text-align: left; display: flex; align-items: center; gap: 0.5rem">
-                                <svg style="width: 1rem; height: 1rem; transition: transform 0.2s; ${this.state.promptsExpanded ? 'transform: rotate(90deg);' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
-                                ▶️ Thinking prompts
-                            </button>
-                            
-                            <div class="prompts-container" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; max-height: ${this.state.promptsExpanded ? '200px' : '0'}; opacity: ${this.state.promptsExpanded ? '1' : '0'}; overflow: hidden; transition: all 0.3s">
-                                ${journalPrompts.map(prompt => `
-                                    <div onclick="app.addPromptToJournal('${prompt.question}')" class="prompt-chip">
-                                        ${prompt.icon} ${prompt.title}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                        
-                        ${this.state.journalEntries.length > 0 ? `
-                            <div>
-                                <h2 class="text-primary" style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem">
-                                    Past Reflections
-                                </h2>
-                                
-                                ${this.state.journalEntries.map(entry => {
-                                    const date = new Date(entry.date);
-                                    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-                                    
-                                    return `
-                                        <div class="card" style="padding: 1.25rem; margin-bottom: 1rem">
-                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem">
-                                                <div class="text-muted" style="font-size: 0.8125rem; font-weight: 500">${formattedDate}</div>
-                                                <div style="display: flex; align-items: center; gap: 0.5rem">
-                                                    ${entry.fromLesson ? `
-                                                        <div style="background: rgba(217, 119, 6, 0.2); color: rgb(253, 230, 138); padding: 0.2rem 0.5rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600">
-                                                            📚 Lesson
-                                                        </div>
-                                                    ` : ''}
-                                                    <div style="background: rgba(14, 116, 144, 0.15); color: rgb(165, 243, 252); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600">
-                                                        ${entry.lessonSkill || entry.skill}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-secondary" style="font-size: 0.9375rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word">
-                                                ${entry.content}
-                                            </div>
-                                            <div style="margin-top: 0.75rem; text-align: right">
-                                                <button onclick="app.deleteJournalEntry(${entry.id})" style="background: none; border: none; color: rgb(148, 163, 184); font-size: 0.75rem; cursor: pointer; padding: 0.5rem">
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </div>
-                                    `;
-                                }).join('')}
-                            </div>
-                        ` : `
-                            <div style="text-align: center; padding: 3rem 1rem; color: rgb(100, 116, 139)">
-                                <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5">📓</div>
-                                <p style="font-size: 0.875rem; margin-bottom: 0.5rem">Your mindfulness journey begins here</p>
-                                <p style="font-size: 0.8125rem">Practice a skill, then capture what you notice</p>
-                            </div>
-                        `}
-                    </div>
-                `;
-                
-                document.getElementById('mainContent').innerHTML = html;
-                
-                // Auto-focus journal if there are pending questions
-                if (initialText) {
-                    setTimeout(() => {
-                        const textarea = document.getElementById('journalText');
-                        if (textarea) {
-                            textarea.focus();
-                            textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    }, 100);
-                }
-            },
-            
-            renderCalendar() {
-                const today = new Date();
-                const year = today.getFullYear();
-                const month = today.getMonth();
-                
-                const firstDay = new Date(year, month, 1);
-                const lastDay = new Date(year, month + 1, 0);
-                const daysInMonth = lastDay.getDate();
-                const startingDayOfWeek = firstDay.getDay();
-                
-                const monthName = today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-                
-                const days = [];
-                for (let i = 0; i < startingDayOfWeek; i++) {
-                    days.push('<div></div>');
-                }
-                
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dateStr = new Date(year, month, day).toDateString();
-                    const isToday = dateStr === today.toDateString();
-                    const isCompleted = this.state.completedDates.includes(dateStr);
-                    const isScheduled = this.state.scheduledPractices[dateStr];
-                    
-                    let classes = 'calendar-day';
-                    if (isToday) classes += ' today';
-                    if (isCompleted) classes += ' completed';
-                    else if (isScheduled) classes += ' scheduled';
-                    
-                    days.push(`
-                        <div class="${classes}" onclick="app.togglePracticeDay('${dateStr}')" style="font-size: 0.875rem; color: rgb(203, 213, 225); font-weight: 500">
-                            ${day}
-                            ${isCompleted ? '<div style="position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); font-size: 0.5rem">✓</div>' : ''}
-                        </div>
-                    `);
-                }
-                
-                const html = `
-                    <div class="content-wrapper">
-                        <div style="padding: 1.5rem 0 1rem">
-                            <h1 class="text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem">
-                                Calendar
-                            </h1>
-                            <p class="text-secondary" style="font-size: 1rem">
-                                Track your practice journey
-                            </p>
-                        </div>
-                        
-                        <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem">
-                            <h2 class="text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; text-align: center">
-                                ${monthName}
-                            </h2>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 1rem">
-                                ${['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => `
-                                    <div style="text-align: center; font-size: 0.75rem; color: rgb(148, 163, 184); font-weight: 600; padding: 0.5rem 0">
-                                        ${day}
-                                    </div>
-                                `).join('')}
-                            </div>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem">
-                                ${days.join('')}
-                            </div>
-                        </div>
-                        
-                        <div class="card" style="padding: 1.5rem; margin-bottom: 1rem">
-                            <h3 class="text-primary" style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem">
-                                Legend
-                            </h3>
-                            
-                            <div style="display: flex; flex-direction: column; gap: 0.75rem">
-                                <div style="display: flex; align-items: center; gap: 0.75rem">
-                                    <div style="width: 1.5rem; height: 1.5rem; border-radius: 0.375rem; border: 2px solid rgba(217, 119, 6, 0.7)"></div>
-                                    <span class="text-secondary" style="font-size: 0.875rem">Today</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 0.75rem">
-                                    <div style="width: 1.5rem; height: 1.5rem; border-radius: 0.375rem; background: rgba(34, 197, 94, 0.2); border: 2px solid rgba(34, 197, 94, 0.5)"></div>
-                                    <span class="text-secondary" style="font-size: 0.875rem">Practiced ✓</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 0.75rem">
-                                    <div style="width: 1.5rem; height: 1.5rem; border-radius: 0.375rem; background: rgba(14, 116, 144, 0.2); border: 2px solid rgba(14, 116, 144, 0.5)"></div>
-                                    <span class="text-secondary" style="font-size: 0.875rem">Scheduled</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 1rem; color: rgb(148, 163, 184); font-size: 0.8125rem">
-                            Tap a day to schedule practice
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('mainContent').innerHTML = html;
-            },
-            
-            // ===== INITIALIZATION =====
-            init() {
-                this.loadState();
-                this.updateNav(this.state.currentTab);
-                this.updateTimerBadge();
-                this.render();
-            }
+            init() { this.loadState(); this.updateNav(this.state.currentTab); this.updateTimerBadge(); this.render(); }
         };
 
-        // Start the app
         window.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
