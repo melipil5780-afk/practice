@@ -1,371 +1,666 @@
-// ===== ALL COURSES =====
-window.courses = [
-    {
+// ===== LESSON DATA STRUCTURE =====
+// This file contains ALL lesson content for the MPHaven app
+
+window.lessonsData = {
+    // ===== MINDFULNESS COURSE =====
+    mindfulness: {
         id: 'mindfulness',
         title: 'Mindfulness',
         description: 'Cultivate awareness of the here and now',
         color: '#d97706',
         icon: '🌱',
-        duration: '8 weeks',
-        started: true
+        
+        skills: {
+            observe: {
+                id: 'observe',
+                name: 'OBSERVE',
+                icon: '👁️',
+                tagline: 'Watch thoughts like clouds',
+                description: 'Notice sensations, thoughts, and emotions without getting caught in them.',
+                practiceDuration: 30,
+                
+                steps: [
+                    {
+                        title: 'The Thought Trap',
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:2rem;text-align:center;margin-bottom:1rem">
+                                <div style="font-size:4rem;margin-bottom:1rem">🌀</div>
+                                <h2 style="color:white;font-size:1.75rem;font-weight:700;margin-bottom:1rem">Quick Question</h2>
+                                <p style="color:rgba(255,255,255,0.95);font-size:1.125rem;line-height:1.6;margin-bottom:1.25rem">
+                                    Right now, in this exact moment...
+                                </p>
+                                <p style="color:white;font-size:1.375rem;font-weight:600;line-height:1.6;margin-bottom:1.5rem">
+                                    Can you stop your thoughts?
+                                </p>
+                                <p class="text-primary" style="font-size:1.05rem;line-height:1.7;margin-bottom:1.5rem">
+                                    Not "think less" or "think calmer."<br/>Completely. Stop. Thinking.
+                                </p>
+                                <p class="text-secondary" style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem">
+                                    Most people say "yes." But they've never actually tried...
+                                </p>
+                                <div style="background:rgba(14,116,144,0.18);border:1px solid rgba(14,116,144,0.35);padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;color:rgb(165,243,252);font-weight:500;display:inline-block;margin-top:0.5rem">
+                                    Discover a key insight
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'The Challenge',
+                        hasTimer: true,
+                        timerDuration: 30,
+                        renderContent: () => `
+                            <div class="card" style="padding:1.5rem;margin-bottom:1rem;background:linear-gradient(135deg,rgba(239,68,68,0.18),rgba(220,38,38,0.12));border:1px solid rgba(239,68,68,0.35)">
+                                <div style="font-size:3rem;margin-bottom:0.75rem;text-align:center">⚠️</div>
+                                <h2 class="text-primary" style="font-size:1.5rem;font-weight:600;margin-bottom:1rem;text-align:center">The Challenge</h2>
+                                <p class="text-primary" style="text-align:center;font-size:1.05rem;line-height:1.7">
+                                    For the next 30 seconds, your job is to <strong style="color:rgb(252,165,165)">completely stop thinking</strong>.
+                                </p>
+                            </div>
+                            
+                            <div class="card" style="padding:1.5rem;margin-bottom:1rem">
+                                <p class="text-primary" style="font-size:1.05rem;font-weight:600;margin-bottom:1.5rem">Here's what to do:</p>
+                                <div>
+                                    ${[
+                                        'Close your eyes (or keep them softly focused)',
+                                        'Make your mind go totally blank',
+                                        'When a thought appears, <strong>fight it</strong>',
+                                        'Push it away with mental force',
+                                        'Don\'t let ANY thoughts in',
+                                        'Use all your willpower to stop thinking'
+                                    ].map((inst, i) => `
+                                        <div style="display:flex;gap:1rem;margin-bottom:1.5rem;align-items:start">
+                                            <div style="width:2.25rem;height:2.25rem;background:linear-gradient(135deg,#0e7490,#d97706);border-radius:0.5rem;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;font-size:0.875rem">${i+1}</div>
+                                            <p class="text-secondary" style="padding-top:0.375rem;line-height:1.6;font-size:1rem">${inst}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div id="timerSection" class="card" style="padding:2rem;margin-bottom:1rem;text-align:center">
+                                <div class="timer-display" id="timerDisplay" style="margin-bottom:1rem">30</div>
+                                <p class="text-secondary" style="margin-bottom:1.5rem;font-size:1rem">Ready? Take a breath...</p>
+                                <button id="timerButton" class="btn-primary" style="font-size:1.125rem">Start Challenge</button>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "The Brain's Secret",
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.35)">
+                                <div style="font-size:3.5rem;margin-bottom:1rem;text-align:center">🧠</div>
+                                <h2 style="color:white;font-size:1.75rem;font-weight:700;text-align:center;margin-bottom:1rem">You Didn't Fail</h2>
+                                <p style="color:rgb(134,239,172);text-align:center;font-size:1.125rem;font-weight:600">The challenge was impossible.</p>
+                            </div>
+                            
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.75rem">Here's Why:</h3>
+                                
+                                <div style="margin-bottom:2rem">
+                                    <div style="background:rgba(14,116,144,0.12);padding:1.25rem;border-radius:1rem;border-left:4px solid rgb(14,116,144);margin-bottom:1.25rem">
+                                        <p style="color:rgb(165,243,252);font-weight:600;font-size:1.125rem;margin-bottom:0.75rem">Your brain produces 6,000+ thoughts per day</p>
+                                        <p class="text-secondary" style="font-size:1rem">Automatically. Without your permission.</p>
+                                    </div>
+                                    
+                                    <div style="background:rgba(217,119,6,0.12);padding:1.25rem;border-radius:1rem;border-left:4px solid rgb(217,119,6);margin-bottom:1.25rem">
+                                        <p style="color:rgb(253,230,138);font-weight:600;font-size:1.125rem;margin-bottom:0.75rem">Trying to stop thoughts = trying to stop your heart</p>
+                                        <p class="text-secondary" style="font-size:1rem">It's not under your conscious control.</p>
+                                    </div>
+                                    
+                                    <div style="background:rgba(94,234,212,0.12);padding:1.25rem;border-radius:1rem;border-left:4px solid rgb(94,234,212)">
+                                        <p style="color:rgb(165,243,252);font-weight:600;font-size:1.125rem;margin-bottom:0.75rem">The harder you fight → The stronger they become</p>
+                                        <p class="text-secondary" style="font-size:1rem">This is called the "White Bear Effect"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Two Ways',
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:1.5rem;margin-bottom:1rem">
+                                <h2 style="color:white;font-size:1.5rem;font-weight:700;text-align:center">Two Ways to Handle Thoughts</h2>
+                            </div>
+                            
+                            <div class="card" style="padding:1.5rem;margin-bottom:1rem;border:2px solid rgba(239,68,68,0.45);background:rgba(239,68,68,0.08)">
+                                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
+                                    <div style="font-size:2rem">❌</div>
+                                    <div>
+                                        <h3 style="color:rgb(248,113,113);font-weight:600;font-size:1.25rem">FIGHTER MODE</h3>
+                                        <p style="color:rgb(252,165,165);font-size:0.875rem;font-weight:500">The painful default</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-secondary" style="margin-bottom:1.25rem">
+                                    ${['Anxious thought appears', '"Stop thinking that!"', 'Try to suppress it', 'Thought gets stronger', 'Fight harder', 'Exhaustion + overwhelm'].map((step, i) => `
+                                        <div style="display:flex;gap:0.75rem;margin-bottom:1rem">
+                                            <div style="width:1.75rem;height:1.75rem;background:rgba(239,68,68,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgb(248,113,113);font-size:0.8125rem;font-weight:700;flex-shrink:0">${i+1}</div>
+                                            <p style="padding-top:0.125rem;font-size:1rem">${step}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="padding:1.5rem;margin-bottom:1rem;border:2px solid rgba(34,197,94,0.45);background:rgba(34,197,94,0.08)">
+                                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
+                                    <div style="font-size:2rem">✅</div>
+                                    <div>
+                                        <h3 style="color:rgb(134,239,172);font-weight:600;font-size:1.25rem">OBSERVER MODE</h3>
+                                        <p style="color:rgb(74,222,128);font-size:0.875rem;font-weight:500">The skillful choice</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-secondary" style="margin-bottom:1.25rem">
+                                    ${['Anxious thought appears', '"Hmm, there\'s anxiety"', 'Watch it like a cloud', 'It drifts and fades', 'Return to now', 'Calm + spacious'].map((step, i) => `
+                                        <div style="display:flex;gap:0.75rem;margin-bottom:1rem">
+                                            <div style="width:1.75rem;height:1.75rem;background:rgba(34,197,94,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgb(134,239,172);font-size:0.8125rem;font-weight:700;flex-shrink:0">${i+1}</div>
+                                            <p style="padding-top:0.125rem;font-size:1rem">${step}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Practice Now',
+                        hasPractice: true,
+                        practiceDuration: 60,
+                        practicePrompts: [
+                            'Take a breath... settle in...',
+                            'Notice what thoughts are here...',
+                            'Label them gently... "thinking"...',
+                            'Watch thoughts like clouds drifting...',
+                            'No need to fight or fix...',
+                            'Just watching... just noticing...',
+                            'You\'re the sky, not the clouds...',
+                            'Let them pass by...'
+                        ],
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:1.75rem;margin-bottom:1rem">
+                                <div style="font-size:3rem;margin-bottom:0.75rem;text-align:center">🧘</div>
+                                <h2 style="color:white;font-size:1.5rem;font-weight:700;text-align:center;margin-bottom:0.5rem">Now, Try the Right Way</h2>
+                                <p style="color:rgba(255,255,255,0.9);text-align:center;font-size:1rem">60 seconds of Observer Mode</p>
+                            </div>
+                            
+                            <div class="card" style="padding:1.5rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;margin-bottom:1.25rem;font-size:1.125rem">This time, DON'T fight:</h3>
+                                <div class="text-secondary" style="line-height:1.7">
+                                    <p style="margin-bottom:1.25rem;font-size:1.05rem">Instead of fighting thoughts, just <strong style="color:rgb(165,243,252)">label them</strong> like this:</p>
+                                    
+                                    <div style="background:rgba(14,116,144,0.12);padding:1rem;border-radius:0.75rem;margin-bottom:1rem;border-left:3px solid rgb(14,116,144)">
+                                        <p style="color:rgb(165,243,252);font-size:1rem">"Planning thought"</p>
+                                    </div>
+                                    
+                                    <div style="background:rgba(217,119,6,0.12);padding:1rem;border-radius:0.75rem;margin-bottom:1rem;border-left:3px solid rgb(217,119,6)">
+                                        <p style="color:rgb(253,230,138);font-size:1rem">"Worry thought"</p>
+                                    </div>
+                                    
+                                    <div style="background:rgba(94,234,212,0.12);padding:1rem;border-radius:0.75rem;margin-bottom:1.5rem;border-left:3px solid rgb(94,234,212)">
+                                        <p style="color:rgb(165,243,252);font-size:1rem">"Memory thought"</p>
+                                    </div>
+                                    
+                                    <p class="text-primary" style="font-size:1.05rem;margin-bottom:1rem">Then... <strong>let it drift away</strong>.</p>
+                                    <p class="text-secondary" style="font-size:1rem">Like clouds passing in the sky.</p>
+                                </div>
+                            </div>
+                            
+                            <div id="practiceTimer" class="card" style="padding:2rem;margin-bottom:1rem;text-align:center;background:linear-gradient(135deg,rgba(14,116,144,0.08),rgba(217,119,6,0.08))">
+                                <div class="timer-display" id="practiceDisplay" style="margin-bottom:1rem">60</div>
+                                <div id="practicePrompt" style="min-height:3.5rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem">
+                                    <p style="color:rgb(165,243,252);font-style:italic;font-size:1.05rem;font-weight:500">Find a comfortable position...</p>
+                                </div>
+                                <button id="practiceButton" class="btn-primary" style="font-size:1.125rem">Begin Practice</button>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Use It Today',
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:1.75rem;margin-bottom:1rem">
+                                <div style="font-size:3rem;margin-bottom:0.75rem;text-align:center">🎯</div>
+                                <h2 style="color:white;font-size:1.5rem;font-weight:700;text-align:center;margin-bottom:0.5rem">Use It in Real Life</h2>
+                                <p style="color:rgba(255,255,255,0.9);text-align:center;font-size:1rem">Your mission for today</p>
+                            </div>
+                            
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem;background:linear-gradient(to right,rgba(251,191,36,0.12),rgba(245,158,11,0.12));border:2px solid rgba(251,191,36,0.4)">
+                                <div style="text-align:center;margin-bottom:1.5rem">
+                                    <div style="font-size:3rem;margin-bottom:0.75rem">📋</div>
+                                    <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1rem">Your One-Word Tool</h3>
+                                    <p style="color:rgb(253,224,71);font-size:1.05rem;line-height:1.7">Every time you notice an emotion today, say one word:</p>
+                                </div>
+                                
+                                <div style="background:rgba(255,255,255,0.12);padding:1.5rem;border-radius:1rem;text-align:center;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.15)">
+                                    <p style="color:white;font-size:1.75rem;font-weight:700">"Noticing"</p>
+                                </div>
+                                
+                                <p style="color:rgb(253,224,71);text-align:center;font-size:1rem;font-style:italic">That's it. Just that one word.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Your Practice Begins',
+                        isComplete: true,
+                        hasJournalPrompt: true,
+                        journalQuestions: [
+                            "What was the biggest difference you felt between fighting your thoughts (the 30-second challenge) and simply noticing them?"
+                        ],
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem;text-align:center;background:linear-gradient(135deg,rgba(14,116,144,0.1),rgba(217,119,6,0.07));border:1px solid rgba(14,116,144,0.25)">
+                                <div style="font-size:4rem;margin-bottom:1rem">🌤️</div>
+                                <h2 class="text-primary" style="font-size:1.5rem;font-weight:600;margin-bottom:1rem">The Understanding You've Gained</h2>
+                                
+                                <div class="text-secondary" style="margin-bottom:1.5rem;text-align:left">
+                                    ${[
+                                        '• Fighting thoughts makes them stronger',
+                                        '• Observing creates space and calm', 
+                                        '• You are the sky, not the clouds',
+                                        '• "Noticing" is your new mindfulness tool'
+                                    ].map(item => `
+                                        <div style="display:flex;gap:1rem;margin-bottom:1rem;align-items:start">
+                                            <span style="color:rgb(134,239,172);font-weight:700;margin-top:0.125rem;flex-shrink:0">✓</span>
+                                            <span style="font-size:1rem">${item}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                
+                                <div style="font-style:italic;color:rgb(226,232,240);line-height:1.7;padding:1.5rem;background:rgba(30,41,59,0.4);border-radius:1rem;border-left:3px solid rgba(14,116,144,0.4);margin:1.5rem 0">
+                                    "Observing thoughts is like watching clouds — they appear, they drift, they dissolve. You remain."
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            
+            describe: {
+                id: 'describe',
+                name: 'DESCRIBE',
+                icon: '📝',
+                tagline: 'Facts over stories',
+                description: 'Put words to what you observe using only facts, not interpretations.',
+                practiceDuration: 30,
+                
+                steps: [
+                    {
+                        title: 'Facts vs Stories',
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem">
+                                <h2 class="text-primary" style="font-size:1.75rem;font-weight:700;margin-bottom:1.5rem;text-align:center">
+                                    The Stories We Tell
+                                </h2>
+                                
+                                <div style="background:rgba(239,68,68,0.1);padding:1.5rem;border-radius:1rem;border-left:4px solid rgb(239,68,68);margin-bottom:1.5rem">
+                                    <p style="color:rgb(248,113,113);font-weight:600;margin-bottom:0.75rem">❌ Story (Interpretation):</p>
+                                    <p class="text-secondary" style="font-size:1.125rem">"I'm having a panic attack"</p>
+                                </div>
+                                
+                                <div style="background:rgba(34,197,94,0.1);padding:1.5rem;border-radius:1rem;border-left:4px solid rgb(34,197,94)">
+                                    <p style="color:rgb(134,239,172);font-weight:600;margin-bottom:0.75rem">✅ Fact (Observable):</p>
+                                    <p class="text-secondary" style="font-size:1.125rem">"My heart is beating fast"</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Just the Facts',
+                        renderContent: () => `
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.5rem">
+                                    Describe only what your senses can detect:
+                                </h3>
+                                
+                                ${[
+                                    { sense: 'See 👀', examples: ['Colors', 'Shapes', 'Movement'] },
+                                    { sense: 'Hear 👂', examples: ['Volume', 'Pitch', 'Rhythm'] },
+                                    { sense: 'Feel 🖐️', examples: ['Temperature', 'Texture', 'Pressure'] },
+                                    { sense: 'Smell 👃', examples: ['Sweet', 'Sharp', 'Earthy'] },
+                                    { sense: 'Taste 👅', examples: ['Salty', 'Bitter', 'Sour'] }
+                                ].map(item => `
+                                    <div style="padding:1rem;background:rgba(14,116,144,0.08);border-radius:0.75rem;margin-bottom:1rem">
+                                        <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.5rem">${item.sense}</p>
+                                        <p class="text-secondary" style="font-size:0.9375rem">${item.examples.join(', ')}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `
+                    },
+                    {
+                        title: '5 Senses Practice',
+                        hasPractice: true,
+                        practiceDuration: 120,
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:1.75rem;margin-bottom:1rem;text-align:center">
+                                <h2 style="color:white;font-size:1.5rem;font-weight:700;margin-bottom:1rem">
+                                    The 5-4-3-2-1 Technique
+                                </h2>
+                                <p style="color:rgba(255,255,255,0.9);font-size:1rem">
+                                    Ground yourself in pure observation
+                                </p>
+                            </div>
+                            
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <p class="text-primary" style="font-weight:600;margin-bottom:1.5rem;font-size:1.05rem">
+                                    Right now, describe in detail:
+                                </p>
+                                
+                                ${[
+                                    { num: 5, thing: 'things you can SEE' },
+                                    { num: 4, thing: 'things you can TOUCH' },
+                                    { num: 3, thing: 'things you can HEAR' },
+                                    { num: 2, thing: 'things you can SMELL' },
+                                    { num: 1, thing: 'thing you can TASTE' }
+                                ].map((item, i) => `
+                                    <div style="display:flex;gap:1rem;margin-bottom:1.25rem;align-items:start">
+                                        <div style="width:2.5rem;height:2.5rem;background:linear-gradient(135deg,#0e7490,#d97706);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0">${item.num}</div>
+                                        <p class="text-secondary" style="padding-top:0.5rem;font-size:1.05rem">${item.thing}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Emotions as Sensations',
+                        renderContent: () => `
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.5rem">
+                                    Describe emotions factually:
+                                </h3>
+                                
+                                <div style="background:rgba(239,68,68,0.08);padding:1.25rem;border-radius:1rem;margin-bottom:1.25rem;border-left:3px solid rgb(239,68,68)">
+                                    <p style="color:rgb(248,113,113);font-weight:600;margin-bottom:0.75rem">❌ Instead of: "I'm angry"</p>
+                                    <p style="color:rgb(134,239,172);font-weight:600;margin-bottom:0.5rem">✅ Try this:</p>
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">
+                                        "I notice tension in my jaw, heat in my face, tight fists, thoughts about fairness"
+                                    </p>
+                                </div>
+                                
+                                <div style="background:rgba(14,116,144,0.08);padding:1.25rem;border-radius:1rem;border-left:3px solid rgb(14,116,144)">
+                                    <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.75rem">Why this works:</p>
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">
+                                        Facts create distance. Stories create fusion. When you describe the sensations, you're no longer drowning in the emotion.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            
+            participate: {
+                id: 'participate',
+                name: 'PARTICIPATE',
+                icon: '🌿',
+                tagline: 'Be fully present',
+                description: 'Engage completely in what you\'re doing. Drop self-consciousness.',
+                practiceDuration: 30,
+                
+                steps: [
+                    {
+                        title: 'Half-There Living',
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem;text-align:center">
+                                <div style="font-size:3.5rem;margin-bottom:1rem">🤖</div>
+                                <h2 class="text-primary" style="font-size:1.75rem;font-weight:700;margin-bottom:1.5rem">
+                                    The Autopilot Problem
+                                </h2>
+                                <p class="text-secondary" style="font-size:1.125rem;line-height:1.7;margin-bottom:1.5rem">
+                                    You're physically here...<br/>
+                                    But mentally somewhere else.
+                                </p>
+                                <p class="text-primary" style="font-size:1.05rem;line-height:1.6">
+                                    Eating without tasting.<br/>
+                                    Walking without seeing.<br/>
+                                    Talking without listening.<br/>
+                                    Living without being alive.
+                                </p>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Full Engagement',
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:1.75rem;margin-bottom:1rem;text-align:center">
+                                <div style="font-size:3rem;margin-bottom:1rem">⚡</div>
+                                <h2 style="color:white;font-size:1.5rem;font-weight:700;margin-bottom:0.75rem">
+                                    Participate = All of You, Here, Now
+                                </h2>
+                            </div>
+                            
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <p class="text-primary" style="font-weight:600;margin-bottom:1.5rem;font-size:1.125rem">
+                                    What it means:
+                                </p>
+                                
+                                ${[
+                                    'No audience in your head watching you',
+                                    'No mental commentary about what you\'re doing',
+                                    'Just pure, unreflective action',
+                                    'Like a child absorbed in play'
+                                ].map(item => `
+                                    <div style="display:flex;gap:1rem;margin-bottom:1.25rem;align-items:start">
+                                        <div style="color:rgb(165,243,252);font-size:1.25rem;flex-shrink:0">✦</div>
+                                        <p class="text-secondary" style="font-size:1.05rem;line-height:1.6">${item}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'One Activity Practice',
+                        hasPractice: true,
+                        practiceDuration: 180,
+                        renderContent: () => `
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.5rem;text-align:center">
+                                    Choose One Routine Activity
+                                </h3>
+                                
+                                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem">
+                                    ${[
+                                        '🪥 Brushing teeth',
+                                        '🚿 Showering',
+                                        '☕ Making coffee',
+                                        '🍽️ Washing dishes',
+                                        '🚶 Walking',
+                                        '🎵 Listening to music'
+                                    ].map(item => `
+                                        <div style="padding:1rem;background:rgba(14,116,144,0.08);border-radius:0.75rem;text-align:center;border:1px solid rgba(14,116,144,0.2)">
+                                            <p class="text-secondary" style="font-size:1rem">${item}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                
+                                <div style="background:rgba(217,119,6,0.1);padding:1.5rem;border-radius:1rem;border:1px solid rgba(217,119,6,0.3)">
+                                    <p style="color:rgb(253,230,138);font-weight:600;margin-bottom:0.75rem">💡 The Practice:</p>
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">
+                                        Do it with 100% attention. When you catch yourself thinking about other things, gently return to the activity. No judgment. Just return.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Finding Flow',
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.5rem;text-align:center">
+                                    You've Already Experienced This
+                                </h3>
+                                
+                                <p class="text-secondary" style="font-size:1.05rem;line-height:1.7;margin-bottom:1.5rem;text-align:center">
+                                    Ever lost track of time because you were so absorbed in something?<br/>
+                                    That's participation. That's flow.
+                                </p>
+                                
+                                <div style="background:rgba(14,116,144,0.08);padding:1.5rem;border-radius:1rem">
+                                    <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:1rem;font-size:1.05rem">
+                                        Signs you're participating fully:
+                                    </p>
+                                    ${[
+                                        'Time feels different',
+                                        'No self-consciousness',
+                                        'Effortless action',
+                                        'Complete presence'
+                                    ].map(item => `
+                                        <div style="display:flex;gap:0.75rem;margin-bottom:0.75rem">
+                                            <span style="color:rgb(134,239,172)">✓</span>
+                                            <span class="text-secondary" style="font-size:1rem">${item}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        }
     },
-    {
+    
+    // ===== STRESS MANAGEMENT COURSE =====
+    stress: {
         id: 'stress',
         title: 'Stress Management',
         description: 'Tools to handle pressure and overwhelm',
         color: '#0e7490',
         icon: '🌊',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'emotions',
-        title: 'Emotional Regulation',
-        description: 'Understand and manage your feelings',
-        color: '#db2777',
-        icon: '💖',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'relationships',
-        title: 'Healthy Relationships',
-        description: 'Build meaningful connections',
-        color: '#7c3aed',
-        icon: '🤝',
-        duration: '8 weeks',
-        started: false
-    },
-    {
-        id: 'self-compassion',
-        title: 'Self-Compassion',
-        description: 'Develop kindness toward yourself',
-        color: '#f59e0b',
-        icon: '💝',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'focus',
-        title: 'Focus & Productivity',
-        description: 'Train your attention muscle',
-        color: '#10b981',
-        icon: '🎯',
-        duration: '5 weeks',
-        started: false
-    },
-    {
-        id: 'sleep',
-        title: 'Sleep & Relaxation',
-        description: 'Improve sleep and unwind deeply',
-        color: '#8b5cf6',
-        icon: '😴',
-        duration: '4 weeks',
-        started: false
-    },
-    {
-        id: 'resilience',
-        title: 'Resilience Building',
-        description: 'Bounce back from challenges',
-        color: '#f97316',
-        icon: '💪',
-        duration: '8 weeks',
-        started: false
-    },
-    {
-        id: 'communication',
-        title: 'Mindful Communication',
-        description: 'Speak and listen with presence',
-        color: '#06b6d4',
-        icon: '🗣️',
-        duration: '6 weeks',
-        started: false
-    },
-    {
-        id: 'anxiety',
-        title: 'Anxiety Management',
-        description: 'Tools for calming anxious thoughts',
-        color: '#84cc16',
-        icon: '🌀',
-        duration: '7 weeks',
-        started: false
-    }
-];
-
-// ===== ALL SKILLS =====
-window.skills = [
-    // Mindfulness Skills
-    {
-        id: 'observe',
-        courseId: 'mindfulness',
-        name: 'OBSERVE',
-        tagline: 'Watch thoughts like clouds',
-        description: 'Notice thoughts, sensations, and emotions without getting caught in them.',
-        icon: '👁️',
-        color: '#0e7490',
-        practiceDuration: 30
-    },
-    {
-        id: 'describe',
-        courseId: 'mindfulness',
-        name: 'DESCRIBE',
-        tagline: 'Facts over stories',
-        description: 'Put words to what you observe using only facts, not interpretations.',
-        icon: '📝',
-        color: '#059669',
-        practiceDuration: 30
-    },
-    {
-        id: 'participate',
-        courseId: 'mindfulness',
-        name: 'PARTICIPATE',
-        tagline: 'Be fully present',
-        description: 'Engage completely in what you\'re doing. Drop self-consciousness.',
-        icon: '🌿',
-        color: '#0e7490',
-        practiceDuration: 30
-    },
-    {
-        id: 'nonjudge',
-        courseId: 'mindfulness',
-        name: 'NON-JUDGMENT',
-        tagline: 'Let things be as they are',
-        description: 'Observe without labeling as good or bad.',
-        icon: '⚖️',
-        color: '#7c3aed',
-        practiceDuration: 30
-    },
-    {
-        id: 'onemindfully',
-        courseId: 'mindfulness',
-        name: 'ONE-MINDFULLY',
-        tagline: 'Do one thing at a time',
-        description: 'Focus completely on the present activity.',
-        icon: '🎯',
-        color: '#d97706',
-        practiceDuration: 30
-    },
-    
-    // Stress Management Skills
-    {
-        id: 'breathing',
-        courseId: 'stress',
-        name: 'DEEP BREATHING',
-        tagline: 'Calm your nervous system',
-        description: 'Use breath to regulate stress response.',
-        icon: '🌀',
-        color: '#0e7490',
-        practiceDuration: 30
-    },
-    {
-        id: 'grounding',
-        courseId: 'stress',
-        name: 'GROUNDING',
-        tagline: 'Return to the present',
-        description: 'Use your senses to anchor in the here and now.',
-        icon: '🌍',
-        color: '#d97706',
-        practiceDuration: 30
-    },
-    {
-        id: 'perspective',
-        courseId: 'stress',
-        name: 'PERSPECTIVE TAKING',
-        tagline: 'See the bigger picture',
-        description: 'Step back from stressful thoughts.',
-        icon: '🔭',
-        color: '#7c3aed',
-        practiceDuration: 30
-    },
-    
-    // Emotional Regulation Skills
-    {
-        id: 'emotionawareness',
-        courseId: 'emotions',
-        name: 'EMOTION AWARENESS',
-        tagline: 'Name it to tame it',
-        description: 'Identify and label emotions as they arise.',
-        icon: '🎭',
-        color: '#db2777',
-        practiceDuration: 30
-    },
-    {
-        id: 'emotionsurfing',
-        courseId: 'emotions',
-        name: 'EMOTION SURFING',
-        tagline: 'Ride the wave of emotion',
-        description: 'Allow emotions to rise and fall without acting on them.',
-        icon: '🏄',
-        color: '#db2777',
-        practiceDuration: 30
-    },
-    
-    // Relationships Skills
-    {
-        id: 'activelistening',
-        courseId: 'relationships',
-        name: 'ACTIVE LISTENING',
-        tagline: 'Listen with full presence',
-        description: 'Give your complete attention when others speak.',
-        icon: '👂',
-        color: '#7c3aed',
-        practiceDuration: 30
-    },
-    {
-        id: 'compassionatecommunication',
-        courseId: 'relationships',
-        name: 'COMPASSIONATE COMMUNICATION',
-        tagline: 'Speak from the heart',
-        description: 'Express yourself with kindness and clarity.',
-        icon: '💬',
-        color: '#7c3aed',
-        practiceDuration: 30
-    }
-];
-
-// ===== ALL LESSON STEPS =====
-window.lessonSteps = {
-    observe: {
-        title: 'OBSERVE',
-        steps: [
-            {
-                title: 'The Thought Trap',
-                content: `Right now... can you stop your thoughts? I mean completely halt the thinking process for the next 30 seconds? Try it. I'll wait...`
-            },
-            {
-                title: 'The Challenge',
-                content: `What happened? Most likely, thoughts kept appearing. A voice might have said, 'Am I doing this right?' or 'This is silly' or 'I wonder how long 30 seconds is...'`
-            },
-            {
-                title: "The Brain's Secret",
-                content: `Here's the realization: You can't stop your thoughts by force. Thinking happens automatically, like breathing or your heart beating.`
-            },
-            {
-                title: 'Two Ways',
-                content: `But you CAN observe thoughts. See the difference? Stopping vs. observing. One is impossible struggle. The other is peaceful awareness.`
-            },
-            {
-                title: 'Practice Now',
-                content: `For the next minute, simply notice thoughts as they arise. Don't engage, argue, or follow them. Just label: 'Thinking...' and return to watching.`
-            },
-            {
-                title: 'Use It Today',
-                content: `Every time you notice an emotion today, say one word: "Noticing." That's all. No judgment, no analysis. Just noticing.`
-            },
-            {
-                title: 'Your Practice Begins',
-                content: `You now understand: Thoughts are automatic, but you can choose how to relate to them. The practice begins now.`
+        
+        skills: {
+            breathing: {
+                id: 'breathing',
+                name: 'DEEP BREATHING',
+                icon: '🌀',
+                tagline: 'Calm your nervous system',
+                description: 'Use breath to regulate stress response.',
+                practiceDuration: 30,
+                
+                steps: [
+                    {
+                        title: 'The Stress Response',
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem">
+                                <h2 class="text-primary" style="font-size:1.75rem;font-weight:700;margin-bottom:1.5rem;text-align:center">
+                                    Why Stress Feels Physical
+                                </h2>
+                                <p class="text-secondary" style="font-size:1.125rem;line-height:1.7;text-align:center;margin-bottom:1.5rem">
+                                    When stressed, your breathing becomes shallow and rapid.<br/>
+                                    This signals "DANGER" to your nervous system.
+                                </p>
+                                
+                                <div style="background:rgba(239,68,68,0.1);padding:1.5rem;border-radius:1rem;border-left:4px solid rgb(239,68,68)">
+                                    <p style="color:rgb(248,113,113);font-weight:600;margin-bottom:1rem">⚠️ Stress Breathing Pattern:</p>
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">
+                                        • Shallow chest breathing<br/>
+                                        • Fast, irregular rhythm<br/>
+                                        • Tension in shoulders and neck<br/>
+                                        • Feeling of not getting enough air
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'The Calming Breath',
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.5rem;text-align:center">
+                                    Deep breathing tells your body: "It's safe"
+                                </h3>
+                                
+                                <div style="background:rgba(34,197,94,0.1);padding:1.5rem;border-radius:1rem;border-left:4px solid rgb(34,197,94);margin-bottom:1.5rem">
+                                    <p style="color:rgb(134,239,172);font-weight:600;margin-bottom:1rem">✅ Calm Breathing Pattern:</p>
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">
+                                        • Deep belly breathing<br/>
+                                        • Slow, steady rhythm<br/>
+                                        • Relaxed shoulders<br/>
+                                        • Full, satisfying breaths
+                                    </p>
+                                </div>
+                                
+                                <div style="background:rgba(14,116,144,0.08);padding:1.25rem;border-radius:1rem">
+                                    <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.75rem">🧪 The Science:</p>
+                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">
+                                        Deep breathing activates your parasympathetic nervous system - your body's natural "calm down" signal.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: '4-7-8 Technique',
+                        hasPractice: true,
+                        practiceDuration: 120,
+                        practicePrompts: [
+                            'Breathe in through your nose... 1... 2... 3... 4',
+                            'Hold... 1... 2... 3... 4... 5... 6... 7',
+                            'Breathe out... 1... 2... 3... 4... 5... 6... 7... 8',
+                            'Beautiful. Again...'
+                        ],
+                        renderContent: () => `
+                            <div class="card skill-header" style="padding:1.75rem;margin-bottom:1rem;text-align:center">
+                                <h2 style="color:white;font-size:1.5rem;font-weight:700;margin-bottom:0.75rem">
+                                    The 4-7-8 Breath
+                                </h2>
+                                <p style="color:rgba(255,255,255,0.9);font-size:1rem">
+                                    A powerful stress-relief technique
+                                </p>
+                            </div>
+                            
+                            <div class="card" style="padding:1.75rem;margin-bottom:1rem">
+                                <div style="margin-bottom:1.5rem">
+                                    <div style="padding:1.25rem;background:rgba(14,116,144,0.12);border-radius:1rem;margin-bottom:1rem;border-left:4px solid rgb(14,116,144)">
+                                        <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.5rem">1️⃣ Inhale for 4 counts</p>
+                                        <p class="text-secondary" style="font-size:0.9375rem">Through your nose, deep into your belly</p>
+                                    </div>
+                                    
+                                    <div style="padding:1.25rem;background:rgba(217,119,6,0.12);border-radius:1rem;margin-bottom:1rem;border-left:4px solid rgb(217,119,6)">
+                                        <p style="color:rgb(253,230,138);font-weight:600;margin-bottom:0.5rem">2️⃣ Hold for 7 counts</p>
+                                        <p class="text-secondary" style="font-size:0.9375rem">Let the breath settle</p>
+                                    </div>
+                                    
+                                    <div style="padding:1.25rem;background:rgba(34,197,94,0.12);border-radius:1rem;border-left:4px solid rgb(34,197,94)">
+                                        <p style="color:rgb(134,239,172);font-weight:600;margin-bottom:0.5rem">3️⃣ Exhale for 8 counts</p>
+                                        <p class="text-secondary" style="font-size:0.9375rem">Slowly through your mouth</p>
+                                    </div>
+                                </div>
+                                
+                                <div style="background:rgba(251,191,36,0.1);padding:1rem;border-radius:0.75rem;border:1px dashed rgba(251,191,36,0.4)">
+                                    <p style="color:rgb(253,224,71);font-size:0.875rem;text-align:center">
+                                        💡 Repeat 4 times for best results
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Daily Practice',
+                        isComplete: true,
+                        renderContent: () => `
+                            <div class="card" style="padding:2rem;margin-bottom:1rem">
+                                <h3 class="text-primary" style="font-weight:600;font-size:1.25rem;margin-bottom:1.5rem;text-align:center">
+                                    When to Use This
+                                </h3>
+                                
+                                ${[
+                                    { situation: '😰 Before a stressful situation', example: 'Big presentation, difficult conversation' },
+                                    { situation: '😤 When feeling overwhelmed', example: 'Too many tasks, racing thoughts' },
+                                    { situation: '😡 During anger or frustration', example: 'Traffic, argument, injustice' },
+                                    { situation: '😴 Before bed', example: 'To calm down and prepare for sleep' }
+                                ].map(item => `
+                                    <div style="padding:1.25rem;background:rgba(14,116,144,0.08);border-radius:1rem;margin-bottom:1rem">
+                                        <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.5rem">${item.situation}</p>
+                                        <p class="text-secondary" style="font-size:0.9375rem">${item.example}</p>
+                                    </div>
+                                `).join('')}
+                                
+                                <div style="background:rgba(34,197,94,0.1);padding:1.25rem;border-radius:1rem;margin-top:1.5rem;border:1px solid rgba(34,197,94,0.3)">
+                                    <p style="color:rgb(134,239,172);font-weight:600;text-align:center;font-size:1.05rem">
+                                        🎯 Practice 5 deep breaths whenever you feel stressed
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
             }
-        ]
-    },
-    
-    describe: {
-        title: 'DESCRIBE',
-        steps: [
-            {
-                title: 'The Stories We Tell',
-                content: `Notice the difference: "My heart is beating fast" (fact) vs. "I'm having a panic attack" (story).`
-            },
-            {
-                title: 'Sticking to Facts',
-                content: `Describe only what you can observe with your senses: see, hear, feel, smell, taste.`
-            },
-            {
-                title: 'Practice: The 5 Senses',
-                content: `Right now: Name 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, 1 thing you can taste.`
-            },
-            {
-                title: 'When Emotions Arise',
-                content: `Instead of "I'm angry," try: "I notice tension in my jaw, heat in my face, thoughts about fairness."`
-            }
-        ]
-    },
-    
-    participate: {
-        title: 'PARTICIPATE',
-        steps: [
-            {
-                title: 'Half-There Living',
-                content: `How often are you physically present but mentally elsewhere?`
-            },
-            {
-                title: 'The Art of Full Engagement',
-                content: `Participate means: all of you, here, now. No audience in your head watching you.`
-            },
-            {
-                title: 'Practice: One Activity',
-                content: `Choose one routine activity (brushing teeth, washing dishes) and do it with 100% attention.`
-            },
-            {
-                title: 'Flow State',
-                content: `When you lose track of time because you're so engaged, that's participation.`
-            }
-        ]
-    },
-    
-    breathing: {
-        title: 'DEEP BREATHING',
-        steps: [
-            {
-                title: 'The Stress Response',
-                content: `Stress triggers shallow, rapid breathing. This signals "danger" to your nervous system.`
-            },
-            {
-                title: 'The Calming Breath',
-                content: `Deep, slow breathing tells your body: "It's safe to relax."`
-            },
-            {
-                title: '4-7-8 Technique',
-                content: `Inhale for 4 counts, hold for 7, exhale for 8. This activates the parasympathetic nervous system.`
-            },
-            {
-                title: 'Daily Practice',
-                content: `Practice 5 deep breaths whenever you feel stressed.`
-            }
-        ]
-    },
-    
-    emotionawareness: {
-        title: 'EMOTION AWARENESS',
-        steps: [
-            {
-                title: 'The Emotional Landscape',
-                content: `Emotions are like weather - they come and go. You are the sky.`
-            },
-            {
-                title: 'Naming Emotions',
-                content: `Simply saying "This is anger" or "This is sadness" creates distance.`
-            },
-            {
-                title: 'Emotion vs. Reaction',
-                content: `You can feel anger without yelling. You can feel fear without running.`
-            },
-            {
-                title: 'Daily Check-ins',
-                content: `Pause 3 times daily and ask: "What am I feeling right now?"`
-            }
-        ]
-    },
-    
-    activelistening: {
-        title: 'ACTIVE LISTENING',
-        steps: [
-            {
-                title: 'Listening vs. Waiting to Speak',
-                content: `Most people aren't listening - they're preparing their response.`
-            },
-            {
-                title: 'Full Attention',
-                content: `Put away distractions. Make eye contact. Be fully present.`
-            },
-            {
-                title: 'Reflective Listening',
-                content: `Repeat back what you heard: "So what I'm hearing is..."`
-            },
-            {
-                title: 'Practice with a Friend',
-                content: `Spend 5 minutes just listening without interrupting or advising.`
-            }
-        ]
+        }
     }
 };
