@@ -6,86 +6,460 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0f172a">
-    <title>MPHaven - Your Sanctuary</title>
+    <title>MPHaven</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; 
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; }
-        .container { width: 100%; height: 100vh; display: flex; flex-direction: column; }
-        .app-wrapper { width: 100%; max-width: 28rem; height: 100%; margin: 0 auto; 
-            background: rgba(15, 23, 42, 0.98); display: flex; flex-direction: column; 
-            border-left: 1px solid rgba(30, 41, 59, 0.5); border-right: 1px solid rgba(30, 41, 59, 0.5); position: relative; }
-        .bg-blur-1, .bg-blur-2 { position: absolute; border-radius: 50%; filter: blur(140px);
-            pointer-events: none; z-index: 0; opacity: 0.6; }
-        .bg-blur-1 { top: -5%; left: 50%; transform: translateX(-50%); width: 22rem; height: 22rem; 
-            background: rgba(14, 116, 144, 0.08); }
-        .bg-blur-2 { bottom: -5%; right: -5%; width: 18rem; height: 18rem; background: rgba(217, 119, 6, 0.08); }
-        .main-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; 
-            position: relative; z-index: 1; }
-        .main-content::-webkit-scrollbar { display: none; }
-        .content-wrapper { padding: 1rem 1.25rem 2rem; }
-        .card { background: linear-gradient(135deg, rgba(30, 41, 59, 0.65), rgba(15, 23, 42, 0.45)); 
-            border: 1px solid rgba(51, 65, 85, 0.4); border-radius: 1.25rem; }
-        .skill-header { background: linear-gradient(135deg, #0e7490, #d97706); }
-        .btn-primary { background: linear-gradient(to right, #0e7490, #d97706); color: white; font-weight: 600; 
-            border: none; padding: 1rem; border-radius: 1rem; cursor: pointer; width: 100%; font-size: 1rem; 
-            transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(14, 116, 144, 0.2); }
-        .btn-primary:hover, .btn-primary:active { opacity: 0.92; transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(14, 116, 144, 0.25); }
-        .progress-dots { display: flex; gap: 0.25rem; }
-        .progress-dot { flex: 1; height: 0.5rem; background: rgba(148, 163, 184, 0.25); border-radius: 9999px; }
-        .progress-dot.active { background: linear-gradient(to right, #0e7490, #d97706); }
-        .fade-in { animation: fadeIn 0.35s ease-out; }
-        .hidden { display: none !important; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .timer-display { font-size: 4rem; font-weight: 700; background: linear-gradient(to right, #0e7490, #d97706); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .step-transition { animation: slideUp 0.4s ease-out; }
-        .journal-textarea { width: 100%; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(51, 65, 85, 0.4);
-            border-radius: 0.75rem; padding: 1rem; color: white; font-size: 16px; min-height: 140px; 
-            line-height: 1.6; margin-bottom: 1rem; resize: vertical; font-family: inherit; }
-        .journal-textarea:focus { outline: none; border-color: rgba(14, 116, 144, 0.5); 
-            background: rgba(30, 41, 59, 0.7); }
-        .prompt-chip { display: inline-block; padding: 0.75rem 1.25rem; background: rgba(14, 116, 144, 0.1);
-            border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 9999px; color: rgb(165, 243, 252);
-            font-size: 0.875rem; margin: 0.25rem; cursor: pointer; transition: all 0.2s ease; }
-        .prompt-chip:active { background: rgba(14, 116, 144, 0.2); transform: translateY(-1px); }
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            height: -webkit-fill-available;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            height: -webkit-fill-available;
+            background: #0f172a;
+            overflow: hidden;
+            position: fixed;
+            touch-action: manipulation;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-wrapper {
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-blur-1, .bg-blur-2 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        
+        .bg-blur-1 {
+            top: -10rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22rem;
+            height: 22rem;
+            background: rgba(14, 116, 144, 0.08);
+        }
+        
+        .bg-blur-2 {
+            bottom: -10rem;
+            right: -5rem;
+            width: 18rem;
+            height: 18rem;
+            background: rgba(217, 119, 6, 0.08);
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: relative;
+            z-index: 1;
+            scroll-behavior: smooth;
+        }
+        
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-bar {
+            border-top: 1px solid rgba(30, 41, 59, 0.5);
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 0 calc(0.75rem + env(safe-area-inset-bottom));
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 0.5rem;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            min-height: 60px;
+            min-width: 70px;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .nav-btn:active {
+            opacity: 0.7;
+            transform: scale(0.96);
+            transition: transform 0.1s ease;
+        }
+
+        .nav-indicator {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2.5rem;
+            height: 3px;
+            background: linear-gradient(to right, #0e7490, #d97706);
+            border-radius: 9999px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            transition: all 0.2s ease;
+        }
+
+        .nav-icon.active {
+            color: white;
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .nav-icon.inactive {
+            color: rgba(100, 116, 139, 0.7);
+            opacity: 0.7;
+        }
+
+        .nav-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-label.active {
+            color: white;
+            opacity: 1;
+        }
+
+        .nav-label.inactive {
+            color: rgba(100, 116, 139, 0.7);
+            opacity: 0.7;
+        }
+
+        /* ===== CONTENT WRAPPER ===== */
+        .content-wrapper {
+            padding: max(1rem, env(safe-area-inset-top)) 1.25rem 2rem 1.25rem;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes gentleFadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(8px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { 
+                text-shadow: 0 4px 20px rgba(14, 116, 144, 0.3); 
+            }
+            50% { 
+                text-shadow: 0 4px 25px rgba(14, 116, 144, 0.5); 
+            }
+        }
+
+        @keyframes scaleIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+
+        .fade-in {
+            animation: gentleFadeIn 0.35s ease-out;
+        }
+
+        .scale-in {
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        /* ===== CARDS & COMPONENTS ===== */
+        .card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.65), rgba(15, 23, 42, 0.45));
+            border: 1px solid rgba(51, 65, 85, 0.4);
+            border-radius: 1.25rem;
+            transition: transform 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.1), rgba(217, 119, 6, 0.07));
+            border: 1px solid rgba(14, 116, 144, 0.25);
+        }
+
+        .practice-timer {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #0e7490, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            margin: 2rem 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #0e7490, #d97706);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 1rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(14, 116, 144, 0.2);
+            margin-top: 1rem;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        /* ===== JOURNAL ===== */
+        .journal-textarea {
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(51, 65, 85, 0.4);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: white;
+            font-size: 16px;
+            min-height: 140px;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            resize: none;
+            font-family: inherit;
+        }
+
+        .journal-textarea:focus {
+            outline: none;
+            border-color: rgba(14, 116, 144, 0.5);
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 1.25rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            opacity: 0;
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(14, 116, 144, 0.3);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 28rem;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.3s ease-out;
+            margin: auto;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            max-height: 85vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== CALENDAR WIDGET ===== */
+        .calendar-widget {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(51, 65, 85, 0.4);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            cursor: default;
+        }
+
+        .calendar-day.today {
+            background: rgba(217, 119, 6, 0.2);
+            border: 2px solid rgba(217, 119, 6, 0.5);
+            color: white;
+        }
+
+        .calendar-day.practiced {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: rgb(134, 239, 172);
+        }
+
+        .calendar-day.scheduled {
+            background: rgba(14, 116, 144, 0.2);
+            border: 1px solid rgba(14, 116, 144, 0.4);
+            color: rgb(165, 243, 252);
+        }
+
+        /* ===== TEXT UTILITIES ===== */
         .text-primary { color: rgb(241, 245, 249); }
         .text-secondary { color: rgb(203, 213, 225); }
         .text-muted { color: rgb(148, 163, 184); }
         .text-teal-light { color: rgb(165, 243, 252); }
-        .nav-bar { position: relative; z-index: 1000; border-top: 1px solid rgba(30, 41, 59, 0.5);
-            background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(24px); 
-            box-shadow: 0 -20px 25px -5px rgba(0, 0, 0, 0.3); flex-shrink: 0; padding: 0.75rem 0; }
-        .nav-container { display: flex; align-items: center; justify-content: space-around; max-width: 28rem; margin: 0 auto; }
-        .nav-btn { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.375rem;
-            padding: 0.5rem 1rem; background: none; border: none; cursor: pointer; transition: all 0.2s;
-            -webkit-tap-highlight-color: rgba(0,0,0,0); min-width: 80px; min-height: 60px; }
-        .nav-indicator { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2.5rem; 
-            height: 3px; background: linear-gradient(to right, #0e7490, #d97706); border-radius: 9999px; }
-        .nav-indicator.hidden { display: none; }
-        .nav-icon { width: 24px; height: 24px; transition: all 0.2s; flex-shrink: 0; }
-        .nav-icon.active { color: white !important; transform: scale(1.1); }
-        .nav-icon.inactive { color: rgb(100, 116, 139) !important; }
-        .nav-label { font-size: 0.6875rem; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
-        .nav-label.active { color: white !important; }
-        .nav-label.inactive { color: rgb(100, 116, 139) !important; }
-        .timer-badge { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; border-radius: 50%;
-            background: #d97706; opacity: 0; transition: opacity 0.3s ease; }
-        .timer-badge.active { opacity: 1; animation: pulse 1.5s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9998;
-            display: flex; align-items: center; justify-content: center; padding: 1.25rem; }
-        .modal-content { background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-            border: 1px solid rgba(14, 116, 144, 0.3); border-radius: 1.5rem; padding: 2rem;
-            max-width: 28rem; width: 100%; backdrop-filter: blur(10px); animation: slideUp 0.3s ease-out; }
+        .text-amber { color: rgb(251, 191, 36); }
+
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 380px) {
+            .content-wrapper {
+                padding: max(0.75rem, env(safe-area-inset-top)) 1rem 1.5rem 1rem;
+            }
+            
+            .practice-timer {
+                font-size: 3.5rem;
+                margin: 1.5rem 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .app-wrapper {
+                max-width: 40rem;
+                margin: 0 auto;
+                height: auto;
+                min-height: 100%;
+                border-radius: 2rem;
+                overflow: hidden;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            }
+            
+            .content-wrapper {
+                padding: max(1.5rem, env(safe-area-inset-top)) 2rem 2rem 2rem;
+            }
+            
+            .practice-timer {
+                font-size: 5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -93,435 +467,865 @@
         <div class="app-wrapper">
             <div class="bg-blur-1"></div>
             <div class="bg-blur-2"></div>
+
             <div id="mainContent" class="main-content"></div>
+
             <div class="nav-bar">
                 <div class="nav-container">
-                    <button onclick="app.switchTab('home')" class="nav-btn" data-tab="home">
+                    <button id="homeBtn" class="nav-btn" data-tab="home">
                         <div class="nav-indicator"></div>
-                        <svg class="nav-icon active" stroke-width="2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="nav-icon active" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
                         <span class="nav-label active">Home</span>
                     </button>
-                    <button onclick="app.switchTab('paths')" class="nav-btn" data-tab="paths">
-                        <div class="nav-indicator hidden"></div>
-                        <svg class="nav-icon inactive" stroke-width="2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    
+                    <button id="learnBtn" class="nav-btn" data-tab="learn">
+                        <div class="nav-indicator"></div>
+                        <svg class="nav-icon inactive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
-                        <span class="nav-label inactive">Paths</span>
+                        <span class="nav-label inactive">Learn</span>
                     </button>
-                    <button onclick="app.switchTab('you')" class="nav-btn" data-tab="you">
-                        <div class="nav-indicator hidden"></div>
-                        <svg class="nav-icon inactive" stroke-width="2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    
+                    <button id="practiceBtn" class="nav-btn" data-tab="practice">
+                        <div class="nav-indicator"></div>
+                        <div class="timer-badge"></div>
+                        <svg class="nav-icon inactive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <span class="nav-label inactive">You</span>
+                        <span class="nav-label inactive">Practice</span>
+                    </button>
+                    
+                    <button id="journalBtn" class="nav-btn" data-tab="journal">
+                        <div class="nav-indicator"></div>
+                        <svg class="nav-icon inactive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span class="nav-label inactive">Journal</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="modalContainer"></div>
 
-    <script src="lessons-data.js"></script>
     <script>
-        const app = {
-            state: {
-                currentTab: 'home',
-                currentCourse: null,
-                userProgress: {},
-                journalEntries: [],
-                practiceTimerRunning: false,
-                practiceSeconds: 0,
-                practiceStartedAt: null,
-                practiceSkill: null,
-                practiceTargetTime: 30
-            },
-            
-            saveState() { try { localStorage.setItem('mphaven_state', JSON.stringify(this.state)); } catch(e) {} },
-            loadState() { try { const s = localStorage.getItem('mphaven_state'); 
-                if(s) { const loaded = JSON.parse(s); this.state = {...this.state, ...loaded}; 
-                if(this.state.practiceTimerRunning && this.state.practiceStartedAt) {
-                    const elapsed = Math.floor((Date.now() - this.state.practiceStartedAt)/1000);
-                    this.state.practiceSeconds = Math.min(elapsed, this.state.practiceTargetTime);
-                    if(this.state.practiceSeconds >= this.state.practiceTargetTime) this.state.practiceTimerRunning = false;
-                    else this.resumePracticeTimer(); }}} catch(e) {} },
-            
-            switchTab(tabName) { this.state.currentTab = tabName; this.saveState(); this.updateNav(tabName); 
-                this.updateTimerBadge(); this.render(); },
-            
-            updateNav(tabName) {
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    const indicator = btn.querySelector('.nav-indicator');
-                    const icon = btn.querySelector('.nav-icon');
-                    const label = btn.querySelector('.nav-label');
-                    const isActive = btn.dataset.tab === tabName;
-                    if(isActive) { indicator.classList.remove('hidden'); icon.classList.remove('inactive');
-                        icon.classList.add('active'); icon.setAttribute('stroke-width','2.5');
-                        label.classList.remove('inactive'); label.classList.add('active'); }
-                    else { indicator.classList.add('hidden'); icon.classList.remove('active');
-                        icon.classList.add('inactive'); icon.setAttribute('stroke-width','2');
-                        label.classList.remove('active'); label.classList.add('inactive'); }
-                });
-            },
-            
-            updateTimerBadge() {
-                document.querySelectorAll('.timer-badge').forEach(badge => {
-                    badge.classList.toggle('active', this.state.practiceTimerRunning);
-                });
-            },
-            
-            // SHOW SKILL OPTIONS MODAL (Like your original!)
-            showSkillOptions(courseId, skillId) {
-                const course = window.lessonsData[courseId];
-                const skill = course.skills[skillId];
-                
-                const modal = `
-                    <div class="modal-overlay" onclick="if(event.target===this) app.closeModal()">
-                        <div class="modal-content" onclick="event.stopPropagation()">
-                            <div style="text-align:center">
-                                <div style="font-size:3rem;margin-bottom:1rem">${skill.icon}</div>
-                                <h2 class="text-primary" style="font-size:1.75rem;font-weight:700;margin-bottom:0.5rem">${skill.name}</h2>
-                                <p class="text-secondary" style="margin-bottom:1.5rem;font-size:0.875rem">${skill.tagline}</p>
-                                
-                                <div style="text-align:left;margin-bottom:1.5rem">
-                                    <p class="text-secondary" style="font-size:1rem;line-height:1.6">${skill.description}</p>
-                                </div>
-                                
-                                <div style="text-align:left;background:rgba(14,116,144,0.08);padding:1rem;border-radius:1rem;margin-bottom:1.5rem;border-left:3px solid rgba(14,116,144,0.4)">
-                                    <p style="color:rgb(165,243,252);font-weight:600;margin-bottom:0.5rem;font-size:0.9375rem">Why this works:</p>
-                                    <p class="text-secondary" style="font-size:0.9375rem;line-height:1.6">${skill.why || 'Master this skill to deepen your practice.'}</p>
-                                </div>
-                                
-                                <div style="display:grid;gap:0.75rem">
-                                    <button onclick="app.startLesson('${courseId}','${skillId}')" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:0.5rem">
-                                        <svg style="width:1.25rem;height:1.25rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                                        </svg>
-                                        Learn This Skill
-                                    </button>
-                                    
-                                    <button onclick="app.startPracticeFromModal('${courseId}','${skillId}')" style="width:100%;padding:1rem;border-radius:1rem;background:rgba(14,116,144,0.12);border:1px solid rgba(14,116,144,0.35);color:rgb(165,243,252);font-weight:600;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem">
-                                        <svg style="width:1.25rem;height:1.25rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        Practice Now (${skill.practiceDuration}s)
-                                    </button>
-                                    
-                                    <button onclick="app.closeModal()" style="width:100%;padding:0.75rem;border-radius:0.75rem;background:transparent;color:rgb(148,163,184);font-weight:500;border:none;font-size:0.875rem;cursor:pointer">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('modalContainer').innerHTML = modal;
-            },
-            
-            closeModal() { document.getElementById('modalContainer').innerHTML = ''; },
-            
-            startLesson(courseId, skillId) {
-                this.closeModal();
-                this.state.currentCourse = courseId;
-                this.state.currentSkill = skillId;
-                this.state.currentStep = 0;
-                this.saveState();
-                this.renderLesson();
-            },
-            
-            startPracticeFromModal(courseId, skillId) {
-                this.closeModal();
-                const skill = window.lessonsData[courseId].skills[skillId];
-                this.state.practiceSkill = skillId;
-                this.state.practiceTargetTime = skill.practiceDuration || 30;
-                this.state.practiceSeconds = 0;
-                this.state.practiceTimerRunning = true;
-                this.state.practiceStartedAt = Date.now();
-                this.saveState();
-                this.updateTimerBadge();
-                this.switchTab('you'); // Switch to You tab for standalone practice
-                this.startPracticeTimer();
-            },
-            
-            nextStep() {
-                const course = window.lessonsData[this.state.currentCourse];
-                const skill = course.skills[this.state.currentSkill];
-                
-                if(this.state.currentStep < skill.steps.length - 1) {
-                    this.state.currentStep++;
-                    this.saveState();
-                    this.renderLesson();
-                } else {
-                    confetti({particleCount:100,spread:70,origin:{y:0.6}});
-                    if(!this.state.userProgress[this.state.currentSkill]) {
-                        this.state.userProgress[this.state.currentSkill] = {completed:true,date:new Date().toISOString()};
-                        this.saveState();
-                    }
-                    setTimeout(() => this.switchTab('home'), 1500);
-                }
-            },
-            
-            startPracticeTimer() {
-                this.practiceInterval = setInterval(() => {
-                    if(!this.state.practiceTimerRunning) { clearInterval(this.practiceInterval); return; }
-                    const now = Date.now();
-                    this.state.practiceSeconds = Math.floor((now - this.state.practiceStartedAt)/1000);
-                    const display = document.getElementById('practiceTimerDisplay');
-                    if(display) { const remaining = this.state.practiceTargetTime - this.state.practiceSeconds;
-                        display.textContent = Math.max(0, remaining); }
-                    if(this.state.practiceSeconds >= this.state.practiceTargetTime) this.stopPractice();
-                    this.saveState();
-                }, 1000);
-            },
-            
-            resumePracticeTimer() { if(this.state.practiceTimerRunning) this.startPracticeTimer(); },
-            
-            stopPractice() {
-                this.state.practiceTimerRunning = false;
-                this.state.practiceSeconds = Math.min(this.state.practiceSeconds, this.state.practiceTargetTime);
-                if(this.practiceInterval) { clearInterval(this.practiceInterval); this.practiceInterval = null; }
-                this.updateTimerBadge();
-                this.saveState();
-                setTimeout(() => this.render(), 500);
-            },
-            
-            render() {
-                const content = document.getElementById('mainContent');
-                content.scrollTop = 0;
-                
-                if(this.state.currentSkill && this.state.currentCourse && this.state.currentTab === 'home') {
-                    this.renderLesson();
-                } else {
-                    switch(this.state.currentTab) {
-                        case 'home': this.renderHome(); break;
-                        case 'paths': this.renderPaths(); break;
-                        case 'you': this.renderYou(); break;
-                        default: this.renderHome();
-                    }
-                }
-            },
-            
-            renderHome() {
-                const html = `
-                    <div class="content-wrapper">
-                        <div style="padding:2rem 0 1.5rem">
-                            <h1 class="text-primary" style="font-size:2.5rem;font-weight:700;margin-bottom:0.5rem;line-height:1.1">
-                                Welcome<br/>back
-                            </h1>
-                            <p class="text-secondary" style="font-size:1.125rem">Your sanctuary is here.</p>
-                        </div>
-
-                        <div style="margin-bottom:2rem">
-                            <h2 class="text-muted" style="font-size:0.875rem;font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.05em">
-                                Continue
-                            </h2>
-                            
-                            ${Object.values(window.lessonsData.mindfulness.skills).slice(0,2).map(skill => `
-                                <div onclick="app.showSkillOptions('mindfulness','${skill.id}')" class="card" style="padding:1.5rem;margin-bottom:1rem;background:linear-gradient(135deg,rgba(14,116,144,0.15) 0%,rgba(14,116,144,0.05) 100%);border:2px solid rgba(14,116,144,0.5);cursor:pointer">
-                                    <div style="display:flex;align-items:center;gap:1rem">
-                                        <div style="width:3.5rem;height:3.5rem;background:#d97706;border-radius:1rem;display:flex;align-items:center;justify-content:center;color:white;font-size:1.75rem">${skill.icon}</div>
-                                        <div style="flex:1">
-                                            <h3 class="text-primary" style="font-size:1.25rem;font-weight:600;margin-bottom:0.25rem">${skill.name}</h3>
-                                            <p class="text-secondary" style="font-size:0.875rem">${skill.tagline}</p>
-                                        </div>
-                                        <div style="width:2.5rem;height:2.5rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:rgba(14,116,144,0.2)">
-                                            <svg style="width:1.25rem;height:1.25rem;color:rgb(165,243,252)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-
-                        <div>
-                            <h2 class="text-muted" style="font-size:0.875rem;font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.05em">
-                                Explore
-                            </h2>
-                            <button onclick="app.switchTab('paths')" class="card" style="padding:1rem;background:rgba(30,41,59,0.5);border:1px solid rgba(51,65,85,0.5);border-radius:1rem;cursor:pointer;width:100%">
-                                <span class="text-primary" style="font-weight:600;font-size:1rem">View all paths</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('mainContent').innerHTML = html;
-            },
-            
-            renderPaths() {
-                const courses = Object.values(window.lessonsData);
-                const html = `
-                    <div class="content-wrapper">
-                        <div style="padding:1.5rem 0 1rem">
-                            <h1 class="text-primary" style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">Your Paths</h1>
-                            <p class="text-secondary" style="font-size:1rem">Choose what speaks to you</p>
-                        </div>
-                        
-                        ${courses.map(course => `
-                            <div class="card" style="padding:1.5rem;margin-bottom:1rem">
-                                <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-                                    <div style="width:4rem;height:4rem;background:${course.color};border-radius:1rem;display:flex;align-items:center;justify-content:center;color:white;font-size:2rem">${course.icon}</div>
-                                    <div style="flex:1">
-                                        <h3 class="text-primary" style="font-size:1.25rem;font-weight:600;margin-bottom:0.25rem">${course.title}</h3>
-                                        <p class="text-secondary" style="font-size:0.875rem">${course.description}</p>
-                                    </div>
-                                </div>
-                                
-                                <div style="display:flex;flex-direction:column;gap:0.75rem">
-                                    ${Object.values(course.skills).map(skill => `
-                                        <button onclick="app.showSkillOptions('${course.id}','${skill.id}')" class="card" style="padding:1rem;cursor:pointer;width:100%;text-align:left;background:rgba(30,41,59,0.3);border:1px solid rgba(71,85,105,0.3)">
-                                            <div style="display:flex;align-items:center;gap:1rem">
-                                                <div style="width:2.5rem;height:2.5rem;background:${course.color};border-radius:0.75rem;display:flex;align-items:center;justify-content:center;color:white;font-size:1.25rem">${skill.icon}</div>
-                                                <div style="flex:1">
-                                                    <h4 class="text-primary" style="font-weight:600;font-size:1rem;margin-bottom:0.125rem">${skill.name}</h4>
-                                                    <p class="text-secondary" style="font-size:0.8125rem">${skill.tagline}</p>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                document.getElementById('mainContent').innerHTML = html;
-            },
-            
-            renderYou() {
-                const completedCount = Object.values(this.state.userProgress).filter(p => p.completed).length;
-                
-                // Check if practice is running
-                if(this.state.practiceTimerRunning && this.state.practiceSkill) {
-                    const skill = Object.values(window.lessonsData).flatMap(c => Object.values(c.skills))
-                        .find(s => s.id === this.state.practiceSkill);
-                    const remaining = this.state.practiceTargetTime - this.state.practiceSeconds;
-                    
-                    const html = `
-                        <div class="content-wrapper">
-                            <div style="margin-bottom:2rem">
-                                <h1 class="text-primary" style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">
-                                    ${skill ? skill.name : 'Practice'}
-                                </h1>
-                                <p class="text-secondary" style="font-size:1rem">
-                                    ${skill ? skill.tagline : 'Focus on your practice'}
-                                </p>
-                            </div>
-                            
-                            <div class="card" style="padding:2rem;margin-bottom:1.5rem;text-align:center;background:linear-gradient(135deg,rgba(14,116,144,0.08),rgba(217,119,6,0.08))">
-                                <div class="timer-display" id="practiceTimerDisplay" style="margin-bottom:1rem">${remaining}</div>
-                                <p class="text-secondary" style="margin-bottom:1.5rem;font-size:1rem">
-                                    Focus on your breath. When thoughts arise, just notice them.
-                                </p>
-                                <button onclick="app.stopPractice()" class="btn-primary" style="background:rgba(239,68,68,0.2);border:2px solid rgba(239,68,68,0.4);color:rgb(252,165,165)">
-                                    ⏹️ Stop Practice
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    document.getElementById('mainContent').innerHTML = html;
-                } else {
-                    const html = `
-                        <div class="content-wrapper">
-                            <div style="padding:1.5rem 0 1rem">
-                                <h1 class="text-primary" style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">You</h1>
-                                <p class="text-secondary" style="font-size:1rem">Your mindfulness journey</p>
-                            </div>
-                            
-                            <div class="card" style="padding:2rem;margin-bottom:2rem;background:rgba(14,116,144,0.1);border:1px solid rgba(14,116,144,0.2)">
-                                <div class="text-teal-light" style="font-size:3rem;font-weight:700;margin-bottom:0.5rem;text-align:center">${completedCount}</div>
-                                <div class="text-secondary" style="font-size:1rem;text-align:center">Skills Learned</div>
-                            </div>
-                            
-                            <button onclick="if(confirm('Reset all progress?')){app.state.userProgress={};app.saveState();app.render()}" class="card" style="padding:1rem;text-align:left;border:1px solid rgba(239,68,68,0.3);color:rgb(254,202,202);font-weight:500;cursor:pointer;background:rgba(239,68,68,0.1);width:100%">
-                                Reset Progress
-                            </button>
-                        </div>
-                    `;
-                    document.getElementById('mainContent').innerHTML = html;
-                }
-            },
-            
-            renderLesson() {
-                const course = window.lessonsData[this.state.currentCourse];
-                const skill = course.skills[this.state.currentSkill];
-                const step = skill.steps[this.state.currentStep];
-                const totalSteps = skill.steps.length;
-                
-                const html = `
-                    <div class="step-transition">
-                        <div class="card" style="padding:1rem;margin-bottom:1rem">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
-                                <button onclick="app.state.currentSkill=null;app.state.currentCourse=null;app.switchTab('home')" style="background:none;border:none;color:white;font-size:1.5rem;cursor:pointer;padding:0.25rem">←</button>
-                                <h1 class="text-primary" style="font-weight:600;font-size:1.125rem">${step.title}</h1>
-                                <div class="text-muted" style="font-size:0.875rem">${this.state.currentStep+1}/${totalSteps}</div>
-                            </div>
-                            <div class="progress-dots">
-                                ${Array(totalSteps).fill().map((_,i) => `<div class="progress-dot ${i<=this.state.currentStep?'active':''}"></div>`).join('')}
-                            </div>
-                        </div>
-                        ${step.renderContent()}
-                        <div class="content-wrapper">
-                            <button onclick="app.nextStep()" class="btn-primary" style="margin-bottom:1rem">
-                                ${this.state.currentStep < totalSteps-1 ? 'Continue →' : 'Finish Lesson ✨'}
-                            </button>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('mainContent').innerHTML = html;
-                
-                if(step.hasTimer) this.setupLessonTimer(step.timerDuration||30);
-                if(step.hasPractice) this.setupPracticeInLesson(step.practiceDuration, step.practicePrompts);
-            },
-            
-            setupLessonTimer(duration) {
-                setTimeout(() => {
-                    const button = document.getElementById('timerButton');
-                    if(button) {
-                        button.onclick = () => {
-                            let timeLeft = duration;
-                            const display = document.getElementById('timerDisplay');
-                            button.disabled = true; button.textContent = 'Focus...'; button.style.opacity = '0.5';
-                            const interval = setInterval(() => {
-                                timeLeft--; display.textContent = timeLeft;
-                                if(timeLeft <= 0) { clearInterval(interval); button.textContent = 'Complete!'; }
-                            }, 1000);
-                        };
-                    }
-                }, 100);
-            },
-            
-            setupPracticeInLesson(duration, prompts) {
-                setTimeout(() => {
-                    const button = document.getElementById('practiceButton');
-                    if(button) {
-                        button.onclick = () => {
-                            let timeLeft = duration; let promptIndex = 0;
-                            const display = document.getElementById('practiceDisplay');
-                            const promptEl = document.getElementById('practicePrompt');
-                            button.disabled = true; button.textContent = 'Practicing...'; button.style.opacity = '0.5';
-                            if(promptEl && prompts && prompts.length>0) 
-                                promptEl.innerHTML = `<p style="color:rgb(165,243,252);font-style:italic;font-size:1.125rem;font-weight:500">${prompts[0]}</p>`;
-                            const interval = setInterval(() => {
-                                timeLeft--; display.textContent = timeLeft;
-                                if(prompts && promptEl && timeLeft%8===0 && promptIndex<prompts.length-1) {
-                                    promptIndex++;
-                                    promptEl.innerHTML = `<p style="color:rgb(165,243,252);font-style:italic;font-size:1.125rem;font-weight:500">${prompts[promptIndex]}</p>`;
-                                }
-                                if(timeLeft <= 0) { clearInterval(interval);
-                                    if(promptEl) promptEl.innerHTML = `<p style="color:rgb(134,239,172);font-weight:600;font-size:1.125rem">✨ Beautiful. Take a moment...</p>`;
-                                    button.textContent = 'Complete!'; }
-                            }, 1000);
-                        };
-                    }
-                }, 100);
-            },
-            
-            init() { this.loadState(); this.updateNav(this.state.currentTab); this.updateTimerBadge(); this.render(); }
+        // ===== APP STATE =====
+        const state = {
+            currentTab: 'home',
+            currentCourse: 'mindfulness',
+            currentSkill: null,
+            currentStep: 0,
+            journalEntries: [],
+            scheduledPractices: {},
+            completedDates: [],
+            timerRunning: false,
+            timerSeconds: 0,
+            timerStartedAt: null,
+            promptsExpanded: false,
+            lastFeelingCheck: null
         };
 
-        window.addEventListener('DOMContentLoaded', () => app.init());
+        // ===== NAVIGATION =====
+        function switchTab(tabName) {
+            if (state.currentTab === tabName) return;
+            
+            state.currentTab = tabName;
+            saveState();
+            
+            // Update navigation UI
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const indicator = btn.querySelector('.nav-indicator');
+                const icon = btn.querySelector('.nav-icon');
+                const label = btn.querySelector('.nav-label');
+                const isActive = btn.dataset.tab === tabName;
+                
+                indicator.style.opacity = isActive ? '1' : '0';
+                icon.classList.toggle('inactive', !isActive);
+                icon.classList.toggle('active', isActive);
+                label.classList.toggle('inactive', !isActive);
+                label.classList.toggle('active', isActive);
+            });
+            
+            // Render the new tab
+            render();
+        }
+
+        // ===== RENDER FUNCTIONS =====
+        function render() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.scrollTop = 0;
+            
+            switch(state.currentTab) {
+                case 'home':
+                    renderHome();
+                    break;
+                case 'learn':
+                    renderLearn();
+                    break;
+                case 'practice':
+                    renderPractice();
+                    break;
+                case 'journal':
+                    renderJournal();
+                    break;
+            }
+        }
+
+        function renderHome() {
+            const today = new Date().toDateString();
+            const hasCheckedToday = state.lastFeelingCheck === today;
+            
+            const html = `
+                <div class="content-wrapper fade-in">
+                    <div style="margin-bottom: 1.5rem">
+                        <h1 class="text-primary" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.1">
+                            Welcome<br/>back
+                        </h1>
+                        <p class="text-secondary text-lg">
+                            Your sanctuary is here.
+                        </p>
+                    </div>
+
+                    ${!hasCheckedToday ? `
+                        <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(14, 116, 144, 0.15), rgba(217, 119, 6, 0.1)); border: 1px solid rgba(14, 116, 144, 0.3);">
+                            <h3 class="text-primary font-semibold text-xl mb-3">How are you feeling?</h3>
+                            <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                                ${['😌 Calm', '😔 Heavy', '😊 Joyful', '😰 Anxious', '😴 Tired', '😐 Neutral'].map(feeling => `
+                                    <button onclick="recordFeeling('${feeling.split(' ')[1].toLowerCase()}')" 
+                                            style="padding: 0.75rem 1rem; border-radius: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 0.875rem; cursor: pointer;">
+                                        ${feeling}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <p class="text-muted text-sm italic">Just for you. Not tracked, not measured.</p>
+                        </div>
+                    ` : ''}
+
+                    <div class="calendar-widget">
+                        <div class="calendar-header">
+                            <h3 class="text-primary font-semibold">Practice Calendar</h3>
+                            <button onclick="openCalendarView()" class="text-teal-light text-sm font-semibold">View All</button>
+                        </div>
+                        ${renderCalendarWidget()}
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem">
+                        <h2 class="text-muted text-sm font-semibold uppercase tracking-wider mb-3">Continue Learning</h2>
+                        ${renderContinueLearning()}
+                    </div>
+
+                    <div style="margin-top: 2rem">
+                        <h2 class="text-muted text-sm font-semibold uppercase tracking-wider mb-3">Quick Actions</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <button onclick="switchTab('practice')" class="card" style="padding: 1.25rem; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem">⏱️</div>
+                                <span class="text-primary font-semibold">Practice</span>
+                            </button>
+                            
+                            <button onclick="switchTab('journal')" class="card" style="padding: 1.25rem; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem">📓</div>
+                                <span class="text-primary font-semibold">Journal</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('mainContent').innerHTML = html;
+        }
+
+        function renderLearn() {
+            const courses = window.coursesData || [];
+            const currentCourse = courses.find(c => c.id === state.currentCourse) || courses[0];
+            
+            const html = `
+                <div class="content-wrapper fade-in">
+                    <div style="margin-bottom: 1.5rem">
+                        <h1 class="text-primary text-3xl font-bold mb-2">Learn</h1>
+                        <p class="text-secondary">Choose a skill to explore</p>
+                    </div>
+
+                    <div style="margin-bottom: 2rem">
+                        <div style="display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem;">
+                            ${courses.map(course => `
+                                <button onclick="selectCourse('${course.id}')" 
+                                        style="padding: 0.75rem 1.25rem; border-radius: 0.75rem; white-space: nowrap; 
+                                               background: ${course.id === state.currentCourse ? course.color + '40' : 'rgba(30,41,59,0.5)'}; 
+                                               border: 1px solid ${course.id === state.currentCourse ? course.color + '60' : 'rgba(51,65,85,0.4)'}; 
+                                               color: ${course.id === state.currentCourse ? 'white' : 'rgb(148,163,184)'};">
+                                    ${course.icon} ${course.title}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-primary text-xl font-semibold mb-3">${currentCourse.title}</h2>
+                        <p class="text-secondary mb-4">${currentCourse.description}</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            ${currentCourse.skills.map(skill => `
+                                <button onclick="openSkillOptions('${skill.id}')" class="card skill-card" style="padding: 1.25rem; text-align: left;">
+                                    <div style="display: flex; align-items: start; gap: 1rem">
+                                        <div style="width: 3rem; height: 3rem; border-radius: 0.875rem; background: ${currentCourse.color}; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0">
+                                            ${skill.icon}
+                                        </div>
+                                        <div style="flex: 1">
+                                            <h3 class="text-primary font-semibold text-lg mb-1">${skill.name}</h3>
+                                            <p class="text-secondary text-sm">${skill.tagline}</p>
+                                        </div>
+                                    </div>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('mainContent').innerHTML = html;
+        }
+
+        function renderPractice() {
+            const courses = window.coursesData || [];
+            const allSkills = [];
+            courses.forEach(course => {
+                course.skills.forEach(skill => {
+                    allSkills.push({...skill, courseId: course.id, courseColor: course.color});
+                });
+            });
+            
+            const currentSkill = state.currentSkill ? 
+                allSkills.find(s => s.id === state.currentSkill) : 
+                allSkills[0];
+            
+            const html = `
+                <div class="content-wrapper fade-in">
+                    <div style="margin-bottom: 1.5rem">
+                        <h1 class="text-primary text-3xl font-bold mb-2">Practice</h1>
+                        <p class="text-secondary">Choose a skill to practice</p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem">
+                        <div style="display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem;">
+                            ${allSkills.map(skill => `
+                                <button onclick="selectPracticeSkill('${skill.id}')" 
+                                        style="padding: 0.75rem 1.25rem; border-radius: 0.75rem; white-space: nowrap; 
+                                               background: ${skill.id === state.currentSkill ? skill.courseColor + '40' : 'rgba(30,41,59,0.5)'}; 
+                                               border: 1px solid ${skill.id === state.currentSkill ? skill.courseColor + '60' : 'rgba(51,65,85,0.4)'}; 
+                                               color: ${skill.id === state.currentSkill ? 'white' : 'rgb(148,163,184)'};">
+                                    ${skill.icon} ${skill.name}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    ${currentSkill ? `
+                        <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(14, 116, 144, 0.08), rgba(217, 119, 6, 0.08))">
+                            <div style="text-align: center">
+                                <div class="practice-timer" id="timerDisplay">${formatTime(state.timerSeconds)}</div>
+                                <p class="text-secondary mb-4">${currentSkill.practicePrompts ? currentSkill.practicePrompts[0] : 'Focus on your breath...'}</p>
+                                
+                                ${!state.timerRunning ? `
+                                    <button onclick="startPracticeTimer()" class="btn-primary">
+                                        Start 30-Second Practice
+                                    </button>
+                                ` : `
+                                    <button onclick="stopPracticeTimer()" class="btn-primary" style="background: rgba(239,68,68,0.2); border: 2px solid rgba(239,68,68,0.4); color: rgb(252,165,165);">
+                                        Stop Practice
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                        
+                        <div class="card" style="padding: 1.25rem;">
+                            <h3 class="text-primary font-semibold mb-2">${currentSkill.name}</h3>
+                            <p class="text-secondary">${currentSkill.description}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('mainContent').innerHTML = html;
+        }
+
+        function renderJournal() {
+            const html = `
+                <div class="content-wrapper fade-in">
+                    <div style="margin-bottom: 1.5rem">
+                        <h1 class="text-primary text-3xl font-bold mb-2">Journal</h1>
+                        <p class="text-secondary">${state.journalEntries.length} thoughtful reflections</p>
+                    </div>
+
+                    <div class="card" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+                        <textarea id="journalEntryText" class="journal-textarea" placeholder="What's alive in your experience right now?..."></textarea>
+                        <button onclick="saveJournalEntry()" class="btn-primary">Save Reflection</button>
+                    </div>
+
+                    ${state.journalEntries.length > 0 ? `
+                        <div>
+                            <h2 class="text-primary text-xl font-semibold mb-3">Past Reflections</h2>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                ${state.journalEntries.map(entry => `
+                                    <div class="card" style="padding: 1.25rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem">
+                                            <span class="text-muted text-sm">${new Date(entry.date).toLocaleDateString()}</span>
+                                            <button onclick="deleteJournalEntry('${entry.id}')" class="text-muted text-sm">Delete</button>
+                                        </div>
+                                        <div class="text-secondary" style="white-space: pre-wrap;">${entry.content}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <button onclick="exportJournal()" class="btn-primary" style="margin-top: 1.5rem; background: rgba(14,116,144,0.1); border: 1px solid rgba(14,116,144,0.3); color: rgb(165,243,252);">
+                                💾 Export Journal
+                            </button>
+                        </div>
+                    ` : `
+                        <div style="text-align: center; padding: 3rem 1rem; color: rgb(100, 116, 139)">
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5">📓</div>
+                            <p class="text-muted">Your mindfulness journey begins here</p>
+                        </div>
+                    `}
+                </div>
+            `;
+            
+            document.getElementById('mainContent').innerHTML = html;
+        }
+
+        // ===== CALENDAR FUNCTIONS =====
+        function renderCalendarWidget() {
+            const today = new Date();
+            const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+            
+            let days = '';
+            
+            // Empty days for start of month
+            for (let i = 0; i < firstDay; i++) {
+                days += `<div class="calendar-day empty"></div>`;
+            }
+            
+            // Actual days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = new Date(today.getFullYear(), today.getMonth(), day).toDateString();
+                const isToday = dateStr === today.toDateString();
+                const isPracticed = state.completedDates.includes(dateStr);
+                const isScheduled = state.scheduledPractices[dateStr];
+                
+                let className = 'calendar-day';
+                if (isToday) className += ' today';
+                if (isPracticed) className += ' practiced';
+                else if (isScheduled) className += ' scheduled';
+                
+                days += `<div class="${className}" onclick="togglePracticeDay('${dateStr}')">${day}</div>`;
+            }
+            
+            return `
+                <div class="calendar-grid">
+                    ${['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => 
+                        `<div style="text-align: center; color: rgb(148,163,184); font-size: 0.75rem; font-weight: 600;">${day}</div>`
+                    ).join('')}
+                    ${days}
+                </div>
+            `;
+        }
+
+        // ===== TIMER FUNCTIONS =====
+        let timerInterval = null;
+        const TARGET_TIME = 30;
+
+        function startPracticeTimer() {
+            if (state.timerRunning) return;
+            
+            state.timerRunning = true;
+            state.timerStartedAt = Date.now();
+            state.timerSeconds = 0;
+            saveState();
+            
+            timerInterval = setInterval(updateTimer, 1000);
+            render();
+        }
+
+        function updateTimer() {
+            if (!state.timerRunning) return;
+            
+            const now = Date.now();
+            state.timerSeconds = Math.floor((now - state.timerStartedAt) / 1000);
+            
+            const display = document.getElementById('timerDisplay');
+            if (display) {
+                display.textContent = formatTime(state.timerSeconds);
+            }
+            
+            if (state.timerSeconds >= TARGET_TIME) {
+                stopPracticeTimer();
+                showPostPracticeOptions();
+            }
+            
+            saveState();
+        }
+
+        function stopPracticeTimer() {
+            state.timerRunning = false;
+            state.timerSeconds = Math.min(state.timerSeconds, TARGET_TIME);
+            
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            // Mark as completed
+            const today = new Date().toDateString();
+            if (!state.completedDates.includes(today)) {
+                state.completedDates.push(today);
+            }
+            
+            saveState();
+            render();
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // ===== JOURNAL FUNCTIONS =====
+        function saveJournalEntry() {
+            const textarea = document.getElementById('journalEntryText');
+            const content = textarea.value.trim();
+            
+            if (!content) {
+                alert('Please write something first');
+                return;
+            }
+            
+            const entry = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                content: content,
+                fromLesson: false
+            };
+            
+            state.journalEntries.unshift(entry);
+            saveState();
+            textarea.value = '';
+            render();
+        }
+
+        function deleteJournalEntry(entryId) {
+            if (confirm('Delete this reflection?')) {
+                state.journalEntries = state.journalEntries.filter(e => e.id !== entryId);
+                saveState();
+                render();
+            }
+        }
+
+        function exportJournal() {
+            if (state.journalEntries.length === 0) {
+                alert('No entries to export');
+                return;
+            }
+            
+            const data = {
+                app: 'MPHaven',
+                exportedAt: new Date().toISOString(),
+                entries: state.journalEntries
+            };
+            
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mphaven-journal-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // ===== MODAL FUNCTIONS =====
+        function openSkillOptions(skillId) {
+            const courses = window.coursesData || [];
+            let skill = null;
+            let course = null;
+            
+            for (const c of courses) {
+                const foundSkill = c.skills.find(s => s.id === skillId);
+                if (foundSkill) {
+                    skill = foundSkill;
+                    course = c;
+                    break;
+                }
+            }
+            
+            if (!skill) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content scale-in">
+                    <div style="text-align: center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem">${skill.icon}</div>
+                        <h2 style="color: white; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem">${skill.name}</h2>
+                        <p style="color: rgb(148,163,184); font-size: 0.875rem; margin-bottom: 1.5rem">${skill.tagline}</p>
+                        
+                        <p style="color: rgb(203,213,225); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 2rem">${skill.description}</p>
+                        
+                        <div style="display: grid; gap: 0.75rem">
+                            <button onclick="startLesson('${skillId}')" class="btn-primary">
+                                📚 Learn This Skill
+                            </button>
+                            
+                            <button onclick="selectPracticeSkill('${skillId}'); closeModal(this); switchTab('practice')" 
+                                    style="width:100%;padding:1rem;border-radius:1rem;background:rgba(14,116,144,0.12);border:1px solid rgba(14,116,144,0.35);color:rgb(165,243,252);font-weight:600;font-size:0.9375rem;cursor:pointer">
+                                ⏱️ Practice Now
+                            </button>
+                        </div>
+                        
+                        <button onclick="closeModal(this)" style="width:100%;margin-top:1rem;padding:0.75rem;border-radius:0.75rem;background:transparent;color:rgb(148,163,184);font-weight:500;border:none;font-size:0.875rem;cursor:pointer">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal(modal);
+            });
+        }
+
+        function startLesson(skillId) {
+            state.currentSkill = skillId;
+            state.currentStep = 0;
+            saveState();
+            renderLesson();
+        }
+
+        function renderLesson() {
+            const courses = window.coursesData || [];
+            let skill = null;
+            let course = null;
+            
+            for (const c of courses) {
+                const foundSkill = c.skills.find(s => s.id === state.currentSkill);
+                if (foundSkill) {
+                    skill = foundSkill;
+                    course = c;
+                    break;
+                }
+            }
+            
+            if (!skill || !skill.steps) {
+                alert('Lesson content not available');
+                return;
+            }
+            
+            const step = skill.steps[state.currentStep];
+            const totalSteps = skill.steps.length;
+            
+            const html = `
+                <div class="content-wrapper fade-in">
+                    <div class="card" style="padding: 1rem; margin-bottom: 1rem">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem">
+                            <button onclick="switchTab('learn')" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0.25rem">←</button>
+                            <h1 class="text-primary" style="font-weight: 600; font-size: 1.125rem">${step.title}</h1>
+                            <div class="text-muted" style="font-size: 0.875rem">${state.currentStep + 1}/${totalSteps}</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem; margin-top: 0.5rem">
+                            ${Array(totalSteps).fill().map((_, i) => `
+                                <div style="flex: 1; height: 0.5rem; background: ${i <= state.currentStep ? 'linear-gradient(to right, #0e7490, #d97706)' : 'rgba(148,163,184,0.25)'}; border-radius: 9999px"></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    ${step.content}
+                    
+                    <div style="margin-top: 2rem">
+                        ${state.currentStep < totalSteps - 1 ? `
+                            <button onclick="nextLessonStep()" class="btn-primary">
+                                Continue →
+                            </button>
+                        ` : `
+                            <button onclick="completeLesson()" class="btn-primary">
+                                Complete Lesson ✨
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('mainContent').innerHTML = html;
+        }
+
+        function nextLessonStep() {
+            state.currentStep++;
+            saveState();
+            renderLesson();
+        }
+
+        function completeLesson() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            
+            // Show journal prompt with lesson questions
+            const courses = window.coursesData || [];
+            let skill = null;
+            
+            for (const c of courses) {
+                const foundSkill = c.skills.find(s => s.id === state.currentSkill);
+                if (foundSkill) {
+                    skill = foundSkill;
+                    break;
+                }
+            }
+            
+            if (skill && skill.steps) {
+                const lastStep = skill.steps[skill.steps.length - 1];
+                if (lastStep.journalQuestions) {
+                    // Save questions for journal
+                    localStorage.setItem('pendingLessonQuestions', JSON.stringify({
+                        questions: lastStep.journalQuestions,
+                        skill: skill.name,
+                        skillId: skill.id
+                    }));
+                }
+            }
+            
+            setTimeout(() => {
+                state.currentSkill = null;
+                state.currentStep = 0;
+                saveState();
+                switchTab('journal');
+            }, 1500);
+        }
+
+        function showPostPracticeOptions() {
+            const courses = window.coursesData || [];
+            let skill = null;
+            
+            for (const c of courses) {
+                const foundSkill = c.skills.find(s => s.id === state.currentSkill);
+                if (foundSkill) {
+                    skill = foundSkill;
+                    break;
+                }
+            }
+            
+            if (!skill) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content scale-in">
+                    <div style="text-align: center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem">✨</div>
+                        <h2 style="color: white; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem">Practice Complete!</h2>
+                        <p style="color: rgb(148,163,184); font-size: 0.9375rem; margin-bottom: 1.5rem">
+                            You practiced <strong style="color: rgb(241,245,249)">${skill.name}</strong> for ${formatTime(TARGET_TIME)}
+                        </p>
+                        
+                        <div style="display: grid; gap: 0.75rem; margin-bottom: 1.5rem">
+                            <button onclick="switchTab('journal'); closeModal(this)" 
+                                    style="width:100%;padding:1rem;border-radius:1rem;background:rgba(30,41,59,0.4);border:1px solid rgba(51,65,85,0.4);color:white;font-weight:600;font-size:0.9375rem;cursor:pointer;text-align:left">
+                                <div style="display:flex;align-items:center;gap:1rem">
+                                    <div style="font-size:2rem">📝</div>
+                                    <div>
+                                        <div style="font-weight:600">Journal About It</div>
+                                        <div style="font-size:0.875rem;color:rgb(148,163,184)">Capture what you noticed</div>
+                                    </div>
+                                </div>
+                            </button>
+                            
+                            <button onclick="closeModal(this); startPracticeTimer()" 
+                                    style="width:100%;padding:1rem;border-radius:1rem;background:rgba(30,41,59,0.4);border:1px solid rgba(51,65,85,0.4);color:white;font-weight:600;font-size:0.9375rem;cursor:pointer;text-align:left">
+                                <div style="display:flex;align-items:center;gap:1rem">
+                                    <div style="font-size:2rem">🔄</div>
+                                    <div>
+                                        <div style="font-weight:600">Practice Again</div>
+                                        <div style="font-size:0.875rem;color:rgb(148,163,184)">Build consistency</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <button onclick="closeModal(this)" style="width:100%;padding:0.75rem;border-radius:0.75rem;background:transparent;color:rgb(148,163,184);font-weight:500;border:none;font-size:0.875rem;cursor:pointer">
+                            Maybe later
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal(modal);
+            });
+        }
+
+        function closeModal(element) {
+            const modal = element.closest ? element.closest('.modal-overlay') : element;
+            if (modal && modal.parentNode) {
+                modal.style.animation = 'fadeIn 0.2s ease-out reverse';
+                setTimeout(() => {
+                    if (modal.parentNode) modal.remove();
+                }, 200);
+            }
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function recordFeeling(feeling) {
+            state.lastFeelingCheck = new Date().toDateString();
+            saveState();
+            render();
+        }
+
+        function selectCourse(courseId) {
+            state.currentCourse = courseId;
+            render();
+        }
+
+        function selectPracticeSkill(skillId) {
+            state.currentSkill = skillId;
+            render();
+        }
+
+        function togglePracticeDay(dateStr) {
+            if (state.scheduledPractices[dateStr]) {
+                delete state.scheduledPractices[dateStr];
+            } else {
+                state.scheduledPractices[dateStr] = true;
+            }
+            saveState();
+            render();
+        }
+
+        function openCalendarView() {
+            // TODO: Implement full calendar view
+            alert('Full calendar view coming soon!');
+        }
+
+        function renderContinueLearning() {
+            const courses = window.coursesData || [];
+            const allSkills = [];
+            courses.forEach(course => {
+                course.skills.forEach(skill => {
+                    allSkills.push({...skill, courseId: course.id, courseColor: course.color});
+                });
+            });
+            
+            if (allSkills.length === 0) return '';
+            
+            const skill = allSkills[0]; // Get first skill for now
+            
+            return `
+                <button onclick="openSkillOptions('${skill.id}')" class="card" style="padding: 1.5rem; background: linear-gradient(135deg, ${skill.courseColor}25, ${skill.courseColor}15); border: 2px solid ${skill.courseColor}50; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 1rem">
+                        <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: ${skill.courseColor}; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.75rem">
+                            ${skill.icon}
+                        </div>
+                        <div style="flex: 1">
+                            <h3 class="text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem">
+                                ${skill.name}
+                            </h3>
+                            <p class="text-secondary" style="font-size: 0.875rem">
+                                ${skill.tagline}
+                            </p>
+                        </div>
+                        <div style="width: 2.5rem; height: 2.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: rgba(14, 116, 144, 0.2);">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: rgb(165, 243, 252);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </button>
+            `;
+        }
+
+        // ===== STATE MANAGEMENT =====
+        function saveState() {
+            try {
+                localStorage.setItem('mphaven_state', JSON.stringify(state));
+            } catch (e) {
+                console.error('Failed to save state:', e);
+            }
+        }
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem('mphaven_state');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    Object.assign(state, data);
+                    
+                    // Resume timer if it was running
+                    if (state.timerRunning && state.timerStartedAt) {
+                        const elapsed = Math.floor((Date.now() - state.timerStartedAt) / 1000);
+                        state.timerSeconds = Math.min(elapsed, TARGET_TIME);
+                        if (state.timerSeconds >= TARGET_TIME) {
+                            state.timerRunning = false;
+                            state.timerSeconds = TARGET_TIME;
+                        } else {
+                            startPracticeTimer();
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load state:', e);
+            }
+        }
+
+        // ===== INITIALIZATION =====
+        function init() {
+            // Load external lessons data
+            if (!window.coursesData) {
+                console.warn('Lessons data not loaded yet');
+                // Load from external file
+                const script = document.createElement('script');
+                script.src = 'lessons-data.js';
+                script.onload = () => {
+                    loadState();
+                    setupEventListeners();
+                    render();
+                };
+                document.head.appendChild(script);
+            } else {
+                loadState();
+                setupEventListeners();
+                render();
+            }
+        }
+
+        function setupEventListeners() {
+            document.getElementById('homeBtn').addEventListener('click', () => switchTab('home'));
+            document.getElementById('learnBtn').addEventListener('click', () => switchTab('learn'));
+            document.getElementById('practiceBtn').addEventListener('click', () => switchTab('practice'));
+            document.getElementById('journalBtn').addEventListener('click', () => switchTab('journal'));
+            
+            // Check for pending lesson questions
+            const pending = localStorage.getItem('pendingLessonQuestions');
+            if (pending) {
+                try {
+                    const data = JSON.parse(pending);
+                    // Pre-fill journal with questions
+                    setTimeout(() => {
+                        const textarea = document.getElementById('journalEntryText');
+                        if (textarea) {
+                            const questionsText = data.questions.map(q => `Q: ${q}\n\nA: `).join('\n\n');
+                            textarea.value = questionsText;
+                            localStorage.removeItem('pendingLessonQuestions');
+                        }
+                    }, 100);
+                } catch (e) {
+                    localStorage.removeItem('pendingLessonQuestions');
+                }
+            }
+        }
+
+        // Start the app
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
